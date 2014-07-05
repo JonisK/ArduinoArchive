@@ -1,0 +1,563 @@
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00001 ;--------------------------------------------------------
+               00002 ; File Created by SDCC : free open source ANSI-C Compiler
+               00003 ; Version 2.9.0 #5416 (Jul 24 2010) (UNIX)
+               00004 ; This file was generated Sun Aug  8 12:38:54 2010
+               00005 ;--------------------------------------------------------
+               00006 ; PIC port for the 14-bit core
+               00007 ;--------------------------------------------------------
+               00008         .file   "delay.c"
+               00009         list    p=16f628a
+               00010         radix dec
+               00011         include "p16f628a.inc"
+               00001         LIST
+               00002 ; P16F628A.INC  Standard Header File, Version 1.10    Microchip Technology, Inc.
+               00265         LIST
+               00266 
+               00012 ;--------------------------------------------------------
+               00013 ; external declarations
+               00014 ;--------------------------------------------------------
+               00015 
+               00016         extern PSAVE
+               00017         extern SSAVE
+               00018         extern WSAVE
+               00019         extern STK12
+               00020         extern STK11
+               00021         extern STK10
+               00022         extern STK09
+               00023         extern STK08
+               00024         extern STK07
+               00025         extern STK06
+               00026         extern STK05
+               00027         extern STK04
+               00028         extern STK03
+               00029         extern STK02
+               00030         extern STK01
+               00031         extern STK00
+               00032 ;--------------------------------------------------------
+               00033 ; global declarations
+               00034 ;--------------------------------------------------------
+               00035         global  _delay_s
+               00036         global  _delay_ms
+               00037 
+               00038 ;--------------------------------------------------------
+               00039 ; global definitions
+               00040 ;--------------------------------------------------------
+               00041 ;--------------------------------------------------------
+               00042 ; absolute symbol definitions
+               00043 ;--------------------------------------------------------
+               00044 ;--------------------------------------------------------
+               00045 ; compiler-defined variables
+               00046 ;--------------------------------------------------------
+               00047 UDL_delay_0     udata
+               00048 r0x1000 res     1
+               00049 r0x1001 res     1
+               00050 r0x1002 res     1
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00051 r0x1003 res     1
+               00052 r0x1004 res     1
+               00053 ;--------------------------------------------------------
+               00054 ; initialized data
+               00055 ;--------------------------------------------------------
+               00056 ;--------------------------------------------------------
+               00057 ; overlayable items in internal ram 
+               00058 ;--------------------------------------------------------
+               00059 ;       udata_ovr
+               00060 ;--------------------------------------------------------
+               00061 ; code
+               00062 ;--------------------------------------------------------
+               00063 code_delay      code
+               00064 ;***
+               00065 ;  pBlock Stats: dbName = C
+               00066 ;***
+               00067 ;entry:  _delay_s       ;Function start
+               00068 ; 2 exit points
+               00069 ;has an exit
+               00070 ;functions called:
+               00071 ;   _delay_ms
+               00072 ;   _delay_ms
+               00073 ;2 compiler assigned registers:
+               00074 ;   r0x1003
+               00075 ;   r0x1004
+               00076 ;; Starting pCode block
+               00077 ;; gen.c:2261:resultRemat *{*
+               00078 ;; gen.c:2597:genLabel *{*
+               00079 ;; ***  genLabel  2600
+               00080 ;; gen.c:2261:resultRemat *{*
+               00081 ;; gen.c:2283:genFunction *{*
+               00082 ;; ***  genFunction  2285 curr label offset=4previous max_key=14 
+0000 00083 _delay_s        ;Function start
+               00084 ; 2 exit points
+               00085 ;; gen.c:2261:resultRemat *{*
+               00086 ;; gen.c:6739:genReceive *{*
+               00087 ;; ***  genReceive  6740
+               00088 ;;      721 register type nRegs=1
+               00089 ;; gen.c:1866:assignResultValue *{*
+               00090 ;; ***  assignResultValue  1868
+               00091 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x104B, size=1, right -=-, size=0
+               00092 ; >>> gen.c:1367:movwf
+               00093 ;;      1109 rIdx = r0x104B 
+               00094         .line   30; "delay.c"   void delay_s (unsigned char cnt) {
+0000 0000 0000 00095         BANKSEL r0x1003
+0002 0080      00096         MOVWF   r0x1003
+               00097 ;; gen.c:2261:resultRemat *{*
+               00098 ;; gen.c:6332:genAssign *{*
+               00099 ;; ***  genAssign  6333
+               00100 ;;      721 register type nRegs=1
+               00101 ;;      721 register type nRegs=1
+               00102 ;;      line = 6342 result AOP_REG=r0x104B, size=1, left -=-, size=0, right AOP_REG=r0x104B, size=1
+               00103 ;; gen.c:2261:resultRemat *{*
+               00104 ;; gen.c:2597:genLabel *{*
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00105 ;; ***  genLabel  2600
+               00106 ;; gen.c:2261:resultRemat *{*
+               00107 ;; gen.c:6332:genAssign *{*
+               00108 ;; ***  genAssign  6333
+               00109 ;;      721 register type nRegs=1
+               00110 ;;      line = 6342 result AOP_REG=r0x104C, size=1, left -=-, size=0, right AOP_LIT=0x04, size=1
+               00111 ;; ***  genAssign  6434
+               00112 ; >>> gen.c:6439:genAssign
+0003 00113 _00131_DS_
+               00114         .line   34; "delay.c"   do { delay_ms(250); } while(--i);
+0003 3004      00115         MOVLW   0x04
+               00116 ; >>> gen.c:6441:genAssign
+               00117 ;;      1109 rIdx = r0x104C 
+0004 0000 0000 00118         BANKSEL r0x1004
+0006 0080      00119         MOVWF   r0x1004
+               00120 ;; gen.c:2261:resultRemat *{*
+               00121 ;; gen.c:2597:genLabel *{*
+               00122 ;; ***  genLabel  2600
+               00123 ;; gen.c:2261:resultRemat *{*
+               00124 ;; gen.c:2261:resultRemat *{*
+               00125 ;; gen.c:2030:genCall *{*
+               00126 ;; ***  genCall  2032
+               00127 ;; gen.c:1765:saveRegisters *{*
+               00128 ;; ***  saveRegisters  1767
+               00129 ;;      2079 left AOP_LIT
+               00130 ;; gen.c:1324:mov2w_op *{*
+               00131 ; >>> gen.c:1339:mov2w_op
+0007 00132 _00123_DS_
+0007 30FA      00133         MOVLW   0xfa
+               00134 ; >>> gen.c:2118:genCall
+0008 2000      00135         CALL    _delay_ms
+               00136 ;; gen.c:1809:unsaveRegisters *{*
+               00137 ;; ***  unsaveRegisters  1811
+               00138 ;; gen.c:2261:resultRemat *{*
+               00139 ;; gen.c:3504:ifxForOp *{*
+               00140 ;; ***  ifxForOp  3506
+               00141 ;; gen.c:6695:genDjnz *{*
+               00142 ;; ***  genDjnz  6696
+               00143 ;;      721 register type nRegs=1
+               00144 ; >>> gen.c:6726:genDjnz
+               00145 ;;      1109 rIdx = r0x104C 
+0009 0000 0000 00146         BANKSEL r0x1004
+000B 0B80      00147         DECFSZ  r0x1004,F
+               00148 ; >>> gen.c:6727:genDjnz
+               00149 ;; ***  popGetLabel  key=1, label offset 22
+000C 2800      00150         GOTO    _00123_DS_
+               00151 ;; gen.c:2261:resultRemat *{*
+               00152 ;; gen.c:2261:resultRemat *{*
+               00153 ;; gen.c:3504:ifxForOp *{*
+               00154 ;; ***  ifxForOp  3506
+               00155 ;; gen.c:6695:genDjnz *{*
+               00156 ;; ***  genDjnz  6696
+               00157 ;;      721 register type nRegs=1
+               00158 ; >>> gen.c:6726:genDjnz
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00159 ;;      1109 rIdx = r0x104B 
+               00160         .line   36; "delay.c"   while (--cnt);
+000D 0B80      00161         DECFSZ  r0x1003,F
+               00162 ; >>> gen.c:6727:genDjnz
+               00163 ;; ***  popGetLabel  key=9, label offset 22
+000E 2800      00164         GOTO    _00131_DS_
+               00165 ;; gen.c:2261:resultRemat *{*
+               00166 ;; gen.c:2261:resultRemat *{*
+               00167 ;; gen.c:2597:genLabel *{*
+               00168 ;; ***  genLabel  2600
+               00169 ;; gen.c:2261:resultRemat *{*
+               00170 ;; gen.c:2435:genEndFunction *{*
+               00171 ;; ***  genEndFunction  2437
+000F 0008      00172         RETURN  
+               00173 ; exit point of _delay_s
+               00174 
+               00175 ;***
+               00176 ;  pBlock Stats: dbName = C
+               00177 ;***
+               00178 ;entry:  _delay_ms      ;Function start
+               00179 ; 2 exit points
+               00180 ;has an exit
+               00181 ;3 compiler assigned registers:
+               00182 ;   r0x1000
+               00183 ;   r0x1001
+               00184 ;   r0x1002
+               00185 ;; Starting pCode block
+               00186 ;; gen.c:2261:resultRemat *{*
+               00187 ;; gen.c:2597:genLabel *{*
+               00188 ;; ***  genLabel  2600
+               00189 ;; gen.c:2261:resultRemat *{*
+               00190 ;; gen.c:2283:genFunction *{*
+               00191 ;; ***  genFunction  2285 curr label offset=0previous max_key=0 
+0010 00192 _delay_ms       ;Function start
+               00193 ; 2 exit points
+               00194 ;; gen.c:2261:resultRemat *{*
+               00195 ;; gen.c:6739:genReceive *{*
+               00196 ;; ***  genReceive  6740
+               00197 ;;      721 register type nRegs=1
+               00198 ;; gen.c:1866:assignResultValue *{*
+               00199 ;; ***  assignResultValue  1868
+               00200 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x1048, size=1, right -=-, size=0
+               00201 ; >>> gen.c:1367:movwf
+               00202 ;;      1109 rIdx = r0x1048 
+               00203         .line   15; "delay.c"   void delay_ms (unsigned char cnt) {
+0010 0000 0000 00204         BANKSEL r0x1000
+0012 0080      00205         MOVWF   r0x1000
+               00206 ;; gen.c:2261:resultRemat *{*
+               00207 ;; gen.c:6332:genAssign *{*
+               00208 ;; ***  genAssign  6333
+               00209 ;;      721 register type nRegs=1
+               00210 ;;      721 register type nRegs=1
+               00211 ;;      line = 6342 result AOP_REG=r0x1048, size=1, left -=-, size=0, right AOP_REG=r0x1048, size=1
+               00212 ;; gen.c:2261:resultRemat *{*
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00213 ;; gen.c:2597:genLabel *{*
+               00214 ;; ***  genLabel  2600
+               00215 ;; gen.c:2261:resultRemat *{*
+               00216 ;; gen.c:6332:genAssign *{*
+               00217 ;; ***  genAssign  6333
+               00218 ;;      721 register type nRegs=1
+               00219 ;;      line = 6342 result AOP_REG=r0x1049, size=1, left -=-, size=0, right AOP_LIT=0x04, size=1
+               00220 ;; ***  genAssign  6434
+               00221 ; >>> gen.c:6439:genAssign
+0013 00222 _00118_DS_
+               00223         .line   19; "delay.c"   do { delay_us(250); } while(--i);
+0013 3004      00224         MOVLW   0x04
+               00225 ; >>> gen.c:6441:genAssign
+               00226 ;;      1109 rIdx = r0x1049 
+0014 0000 0000 00227         BANKSEL r0x1001
+0016 0080      00228         MOVWF   r0x1001
+               00229 ;; gen.c:2261:resultRemat *{*
+               00230 ;; gen.c:2597:genLabel *{*
+               00231 ;; ***  genLabel  2600
+               00232 ;; gen.c:2261:resultRemat *{*
+               00233 ;; gen.c:6332:genAssign *{*
+               00234 ;; ***  genAssign  6333
+               00235 ;;      721 register type nRegs=1
+               00236 ;;      line = 6342 result AOP_REG=r0x104A, size=1, left -=-, size=0, right AOP_LIT=0x53, size=1
+               00237 ;; ***  genAssign  6434
+               00238 ; >>> gen.c:6439:genAssign
+0017 00239 _00116_DS_
+0017 3053      00240         MOVLW   0x53
+               00241 ; >>> gen.c:6441:genAssign
+               00242 ;;      1109 rIdx = r0x104A 
+0018 0000 0000 00243         BANKSEL r0x1002
+001A 0080      00244         MOVWF   r0x1002
+               00245 ;; gen.c:2261:resultRemat *{*
+               00246 ;; gen.c:2597:genLabel *{*
+               00247 ;; ***  genLabel  2600
+               00248 ;; gen.c:2261:resultRemat *{*
+               00249 ;; gen.c:3504:ifxForOp *{*
+               00250 ;; ***  ifxForOp  3506
+               00251 ;; gen.c:6695:genDjnz *{*
+               00252 ;; ***  genDjnz  6696
+               00253 ;;      721 register type nRegs=1
+               00254 ; >>> gen.c:6726:genDjnz
+               00255 ;;      1109 rIdx = r0x104A 
+001B 00256 _00105_DS_
+001B 0000 0000 00257         BANKSEL r0x1002
+001D 0B80      00258         DECFSZ  r0x1002,F
+               00259 ; >>> gen.c:6727:genDjnz
+               00260 ;; ***  popGetLabel  key=1, label offset 4
+001E 2800      00261         GOTO    _00105_DS_
+               00262 ;; gen.c:2261:resultRemat *{*
+               00263 ;; gen.c:2261:resultRemat *{*
+               00264 ;; gen.c:3504:ifxForOp *{*
+               00265 ;; ***  ifxForOp  3506
+               00266 ;; gen.c:6695:genDjnz *{*
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00267 ;; ***  genDjnz  6696
+               00268 ;;      721 register type nRegs=1
+               00269 ; >>> gen.c:6726:genDjnz
+               00270 ;;      1109 rIdx = r0x1049 
+001F 0B80      00271         DECFSZ  r0x1001,F
+               00272 ; >>> gen.c:6727:genDjnz
+               00273 ;; ***  popGetLabel  key=12, label offset 4
+0020 2800      00274         GOTO    _00116_DS_
+               00275 ;; gen.c:2261:resultRemat *{*
+               00276 ;; gen.c:2261:resultRemat *{*
+               00277 ;; gen.c:3504:ifxForOp *{*
+               00278 ;; ***  ifxForOp  3506
+               00279 ;; gen.c:6695:genDjnz *{*
+               00280 ;; ***  genDjnz  6696
+               00281 ;;      721 register type nRegs=1
+               00282 ; >>> gen.c:6726:genDjnz
+               00283 ;;      1109 rIdx = r0x1048 
+               00284         .line   21; "delay.c"   while (--cnt);
+0021 0B80      00285         DECFSZ  r0x1000,F
+               00286 ; >>> gen.c:6727:genDjnz
+               00287 ;; ***  popGetLabel  key=14, label offset 4
+0022 2800      00288         GOTO    _00118_DS_
+               00289 ;; gen.c:2261:resultRemat *{*
+               00290 ;; gen.c:2261:resultRemat *{*
+               00291 ;; gen.c:2597:genLabel *{*
+               00292 ;; ***  genLabel  2600
+               00293 ;; gen.c:2261:resultRemat *{*
+               00294 ;; gen.c:2435:genEndFunction *{*
+               00295 ;; ***  genEndFunction  2437
+0023 0008      00296         RETURN  
+               00297 ; exit point of _delay_ms
+               00298 ;; gen.c:6803:genpic14Code *{*
+               00299 
+               00300 
+               00301 ;       code size estimation:
+               00302 ;          22+    7 =    29 instructions (   72 byte)
+               00303 
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  7
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADEN                              00000003
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCPR1H                            00000016
+CCPR1L                            00000015
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000001F
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+DC                                00000001
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+F                                 00000001
+FERR                              00000002
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+NOT_BO                            00000000
+NOT_BOD                           00000000
+NOT_BOR                           00000000
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+OERR                              00000001
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+OPTION_REG                        00000081
+OSCF                              00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PORTA                             00000005
+PORTB                             00000006
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSAVE                             00000000
+RBIE                              00000003
+RBIF                              00000000
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+RX9                               00000006
+RX9D                              00000000
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+SSAVE                             00000000
+STATUS                            00000003
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+STK07                             00000000
+STK08                             00000000
+STK09                             00000000
+STK10                             00000000
+STK11                             00000000
+STK12                             00000000
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1OSCEN                           00000003
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TMR0                              00000001
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISB                             00000086
+TRMT                              00000001
+TX9                               00000006
+TX9D                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             0000009F
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+WSAVE                             00000000
+Z                                 00000002
+_00105_DS_                        0000001B
+_00116_DS_                        00000017
+_00118_DS_                        00000013
+_00123_DS_                        00000007
+_00131_DS_                        00000003
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_DATA_CP_OFF                      00003FFF
+gpasm-0.13.7 beta               delay.asm   8-8-2010  12:38:54           PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_DATA_CP_ON                       00003EFF
+_ER_OSC_CLKOUT                    00003FFF
+_ER_OSC_NOCLKOUT                  00003FFE
+_EXTCLK_OSC                       00003FEF
+_HS_OSC                           00003FEE
+_INTOSC_OSC_CLKOUT                00003FFD
+_INTOSC_OSC_NOCLKOUT              00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FEC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC_CLKOUT                    00003FFF
+_RC_OSC_NOCLKOUT                  00003FFE
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FED
+__16F628A                         00000001
+_delay_ms                         00000010
+_delay_s                          00000000
+r0x1000                           00000000
+r0x1001                           00000001
+r0x1002                           00000002
+r0x1003                           00000003
+r0x1004                           00000004
+
+
+Errors   :       0
+Warnings :       0 reported,       0 suppressed
+Messages :       0 reported,       0 suppressed
+

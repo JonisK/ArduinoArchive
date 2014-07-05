@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Datenlogger-Rakete/Datenlogger-Rakete.cpp&apos; to &apos;Datenlogger-Rakete.ino&apos;" description="Rename resource &apos;Datenlogger-Rakete.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Datenlogger-Rakete.cpp" name="Datenlogger-Rakete.ino" stamp="1352412374135" updateReferences="true"/>
+</session>

@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Funkmodul_RFM12", "Funkmodul_RFM12.cppproj", "{07B459B4-8D76-4638-BC6D-A459BA2D616B}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Funkmodul_Test", "..\Funkmodul_Test\Funkmodul_Test.cppproj", "{58D2F831-2E85-4D7A-A6E9-02F647557CBC}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "RF12_driver_JeeLib_RX", "..\RF12_driver_JeeLib_RX\RF12_driver_JeeLib_RX.cppproj", "{CA2CC094-35CB-4C6B-AAE8-C9E03CBADB76}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "RF12_driver_JeeLib_TX", "..\RF12_driver_JeeLib_TX\RF12_driver_JeeLib_TX.cppproj", "{194777E4-2CA5-4008-8FCD-3DD7DB9DAB34}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Debug|AVR.Build.0 = Debug|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Release|AVR.ActiveCfg = Release|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Release|AVR.Build.0 = Release|AVR
+		{58D2F831-2E85-4D7A-A6E9-02F647557CBC}.Debug|AVR.ActiveCfg = Debug|AVR
+		{58D2F831-2E85-4D7A-A6E9-02F647557CBC}.Debug|AVR.Build.0 = Debug|AVR
+		{58D2F831-2E85-4D7A-A6E9-02F647557CBC}.Release|AVR.ActiveCfg = Release|AVR
+		{58D2F831-2E85-4D7A-A6E9-02F647557CBC}.Release|AVR.Build.0 = Release|AVR
+		{CA2CC094-35CB-4C6B-AAE8-C9E03CBADB76}.Debug|AVR.ActiveCfg = Debug|AVR
+		{CA2CC094-35CB-4C6B-AAE8-C9E03CBADB76}.Debug|AVR.Build.0 = Debug|AVR
+		{CA2CC094-35CB-4C6B-AAE8-C9E03CBADB76}.Release|AVR.ActiveCfg = Release|AVR
+		{CA2CC094-35CB-4C6B-AAE8-C9E03CBADB76}.Release|AVR.Build.0 = Release|AVR
+		{194777E4-2CA5-4008-8FCD-3DD7DB9DAB34}.Debug|AVR.ActiveCfg = Debug|AVR
+		{194777E4-2CA5-4008-8FCD-3DD7DB9DAB34}.Debug|AVR.Build.0 = Debug|AVR
+		{194777E4-2CA5-4008-8FCD-3DD7DB9DAB34}.Release|AVR.ActiveCfg = Release|AVR
+		{194777E4-2CA5-4008-8FCD-3DD7DB9DAB34}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

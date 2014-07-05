@@ -1,0 +1,221 @@
+20:16:13 **** Incremental Build of configuration Release for project Arduino_Duemilanove_w__ATmega328 ****
+make all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328p libArduino_Duemilanove_w__ATmega328.a
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       2 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          2 bytes (0.1% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       1 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          1 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       1 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          1 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+20:16:14 **** Incremental Build of configuration Release for project Logger ****
+make -k all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328p Logger.elf
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:    2056 bytes (6.3% Full)
+(.text + .data + .bootloader)
+
+Data:        198 bytes (9.7% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 

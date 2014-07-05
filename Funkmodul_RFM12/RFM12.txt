@@ -1,0 +1,181 @@
+Dieses Dokument beschreibt die Nutzung des RFM12 TRX Moduls!
+
+=== WICHTIG ===
+Dieses Dokument wurde aus mehreren Quellen zusammengestellt, und kann Fehler enthalten!
+Es können abweichungen in Bezug auf RF01 / RF02 / RF12 / RFM01 / RFM02 / und anderen Modulen auftreten!
+Es wurde das Datenblatt vom RFM12B und RF12 von www.hoperf.com als Basis genuzt. Zusätzlich wurden diese Informationen mit Hilfe von Forums-Nutzern (https://www.mikrocontroller.net/topic/71682) weiter vervollständigt!
+=== WICHTIG ===
+
+
+
+Hinweis: Die LNA Eingangsimpedanz beträgt 250 Ohm, und muss bei anschluss einer 50 Ohm Antenne entsprechend angepast werden, um das Rauschen zu minimieren!
+
+
+'=== Configuration Setting ===
+'Hex = 80 & xx
+'Bit-Syntax: 10000000 | el | ef | b1 | b0 | x3 | x2 | x1 | x0
+'el (TX FIFO) = Sendepuffer für Datentransfer nutzen (1 = An / 0 = Aus)
+'ef (RX FIFO) = Empfangspuffer für Datenspeicherung nutzen (1 = An / 0 = Aus)
+'b... = Zu nutzende Basisfrequenz (00=315MHz / 01=433MHz / 10=868MHz / 11=915MHz)
+'x... = Interner Clock des Chips kann durch verschieben einer Kondensator Anpass-Stufe bestimmt werden. 0,5pF pro Schritt. Basis ist 8,5pF -> (0000=8,5 / 0001=9,0 / 0010=9,5 / ...)
+
+
+
+'=== Power-Managment ===
+'Hex = 82 & xx
+'Bit-Syntax: 10000010 | er | ebb | et | es | ex | eb | ew | dc
+'er = Empfänger einschalten (1 = an / 0 = Aus)
+'ebb = ... (Synthesizer muss aktiv sein!) (1 = an / 0 = aus)
+'et = Sender einschalten (1 = an / 0 = Aus) (Wenn das TX Register aktiv und mit Daten gefüllt ist/wurde, werden diese Daten sofort gesendet) (1 = an / 0 = aus)
+'es = Schaltet den Synthesizer ein. (1 = an / 0 = aus)
+'ex = Schaltet den Quarz-Oszilator ein. (1 = an / 0 = aus)
+'eb = Vergleichbar mit BrownOutDetection -> Erkennt eine zu geringe Betriebsspannung und erzeugt einen Interrupt, um einen drohenden Spannungsaufall anzukündigen (1 = An / 0 = Aus)
+'ew = Aktiviert den WakeUpTimer des Prozessors. (1 = an / 0 = aus)
+'dc = Deaktiviert die ausgabe des SystemClocks auf dem CLK Pin am Chip (1 = Keine ClockAusgabe / 0 = Clock ausgeben)
+
+
+'=== PLL Setting ===
+'Hex = 198 + y
+'Bit-Syntax: 110011000 | ob1 | ob0 | lpx | ddy | ddit | bw1 | bw0
+'ob... = ... (00= 5 oder 10MHz [standard] / 01=3.3MHz / 1x=2.5MHz oder weniger)
+'lpx = Wählt den 'Low-Power-Mode' für den Quarz-Oszilator aus. (0=1ms [620µA] / 1=2ms [460µA])
+'ddy = ...
+'ddi = Schaltet das Dithering in PLL Schleife ab. (1=Abgeschaltet / 0 = Eingeschaltet)
+'bw... = Wählt die Bandbreite des PLL Signals aus. (00=86.2kbps [-107dBc/Hz] / 01=256kbps [-102dBc/Hz]) Bei 1MHz offset Phasenrauschen.
+
+
+'=== LowBatt / µC Clock Control ===
+'Hex = c0 & xx
+'Bit-Syntax: 11000000 | d2 | d1 | d0 | v4 | v3 | v2 | v1 | v0
+'d... = Bestimmt den Teilungsfaktor für die Clockausgabe am CLK Pin in Abhängigkeit des Internen SystemTakts. (000=1 / 001=1.25 / 010=1.66 / 011=2 / 100=2.5 / 101=3.33 / 110=5 / 111=10)
+'v... = Bestimmt die Minimalspannung, ab der ein Interrupt durchgeführt werden muss. (Ähnlich einer BrownOutDetection). Im Power Managment muss das eb Bit aktiv sein, damit dies funktioniert.
+
+
+'=== Frequency-setting ===
+'Bestimmt den Offset der Sende und Empfangsfrequenz. Dieser Offset wird auf das Basisband im Configuration Setting hinzu gerechnet.
+'Hex = a & xxx
+'Bit-Syntax: 1010 | f11 | f10 | f9 | f8 | f7 | f6 | f5 | f4 | f3 | f2 | f1 | f0
+f... = Bestimmt den Offsetwert der Frequenz. Als Basis gilt das eingestellte Band im 'Configuration Settings' Kommando
+
+
+'=== Data-Rate ===
+'Hex = c6 & xx
+'Bit-Syntax: 11000110 | cs | r6 | r5 | r4 | r3 | r2 | r1 | r0
+'cs =  Vorteiler, Faktor 7. Hiermit kann ein Vorteiler aktiviert werden, der die errechnete Baudrate (r...) durch 7 teilt.
+'r... = Baudratenteilerfaktor
+
+
+'=== RX Control ===
+'Hex = 94 & xx
+'Bit-Syntax: 10010 | p20 | d1 | d2 | i2 | i1 | i0 | g1 | g0 | r2 | r1 | r0
+'p20 = Bestimmt die Funktion des Pin20 (nINT / VDI) am RFM12 Chip (1 = VDI Ausgang / 0 = Interrupt Eingang)
+'d... = (Valid Data Indicator). Definiert die Geschwindigkeit, mit der bestimmt wird, ob ein Signal korrekt ist, oder nicht. (00=schnell / 01=Mittel / 10=Langsam / 11=Immer an). Je nach eingestellter Variante werden unterschiedliche Hardware und Software Kombinationen genuzt. Fast: 'CR_Lock' OR 'DQD' ... Medium: 'CR_Lock' AND ('DRSSI' OR 'DQD') ... SLOW: R/S FlipFlop aus (SET) 'DRSSI' OR 'DQD' OR 'CR_Lock' und (CLR) 'DRSSI' AND 'DQD' AND 'CR_Lock'.
+'i... = Bestimmt die Bandbreite des Empfängers in KHz (KiloHerz). (000=Reserviert / 001=400 / 010=340 / 011=270 / 100=200 / 101=134 / 110=67 / 111=Reserviert)
+'g... = (LNA-Gain) Verstärkungsfacktor des Rauscharmen-Eingangs-Signal-Verstärkers (LNA Low Noise Amplifier). Werte in dBm (Dezibel [Grösse: Milliwat]) Mögliche Werte sind: 0 / -6 / -14 / -20
+'r... = (DRSSI = Digital Received Signal Strength Indication) Minimale Empfangssignalfeldstärke. 6 dBm pro Schritt: (000=-103 / 001=-97 / 010=-91 / ...)
+
+
+'=== Syncron Pattern ===
+'Hex = ce & xx
+'Bit-Syntax: 11001110 | b7 | b6 | b5 | b4 | b3 | b2 | b1 | b0
+'b... = Legt den Wert fest, der als Sycronisations Byte für dieDatenfilterung verwendet werden soll.
+
+'=== Data Filter ===
+'Hex = c2 & xx
+'Bit-Syntax: 11000010 | al | ml | -unknow- (1) | s | -unknow- (1) | f2 | f1 | f0
+'al = Baudratenregenerator schaltet automatisch in den langsamen Modus, sobald er einen Takt erkannt hat.
+'ml = schneller/langsamer Modus
+'-unknow- (1) = ??? (Standard = 1) (Auch im Datenblatt von IA4420 so beschrieben)
+'s = (DataFilter) Typ des Datenfilters (0=DigitalFilter / 1=AnalogFilter). Bei nutzung des Analog-Filters kann kein FIFO sowie kein ClockRecovery genuzt werden.
+'-unknow- (1) = ??? (Standard = 1) (Auch im Datenblatt von IA4420 so beschrieben)
+'f... = (DQD Threshold) Bestimmt den Schwellwert, ab dem ein Signal als Gut empfunden wird, und der Empfänger dieses weiterverarbeiten soll. DQD (data quality detection) zählt die "Spikes" des ungefilterten Signals, und bestimmt darüber die Qualität der Daten.
+
+
+'=== FIFO und RESET-Mode ===
+'Hex = ca & xx
+'Bit-Syntax: 11001010 | f3 | f2 | f1 | f0 | -unknow- (0) | al | ff | dr
+'f... = (FIFO interrupt Level)
+'-unknow- (0) = ??? (Standard = 0) (Auch im Datenblatt von IA4420 so beschrieben)
+'al = (FIFO Fill Condition) Legt den Wert fest, ab dem das Füllen des FIFOs beginnt. (0=Syncron / 1=Ständig). Bei nutzung des Syncronen Modus, werden erst dann Daten in den FIFO geschrieben, wenn eine definierte 16Bit Datenfolge empfangen wurde (Standard ist Hex: 2dd4). 
+'ff = (FIFO Fill) Startet das einlesen der Empfangenen Daten in den FIFO Puffer. Wenn al (FIFO Fill Condition) auf Syncron steht, dann startet das Setzen dieses Bits die Syncronisation Bit Erkennung.
+'dr = (Sens Reset Mode) Wenn dieses Bit auf 1 steht, wir bei einer schwankung von 200mV auf der VCC (Spannungsversorgung des Chips) Leitung, ein System-Reset ausgelöst.
+
+
+'=== Automatic Frequenz Control ===
+'Hex = c4 & xx
+'Bit-Syntax: 11000100 | a1 | a0 | rl1 | rl0 | st | fi | oe | en
+'a... = Modus der AFC Schaltung, 0=Auto, 1=einmalig nach Einschalten, 2=Solange VDI Low ist, 3=unabhängig von VDI
+'r... = (Range Limit) Frequenzraster (00=KeineBegrenzung / 01=+15 > -16 / 10=+7 > -8 / 11=+3 > -4)
+'st = Berechneten Offset Wert übernehmen
+'fi = Genauer Berechnungsmodus (besser aber lansgamer)
+'oe = AFC Offset freischalten
+'en = AFC Berechnung aktivieren
+
+
+'=== TX Configuration Control ===
+'Hex = 98 & xx
+'Bit-Syntax: 1001100 | mp | m3 | m2 | m1 | m0 | -unknow- (0) | p2 | p1 | p0
+'mp = (Modulation Polarity) Bestimmt die Richtung der FSK erzeugung (invertiert das Spektrum).
+'m... = (fDeviation) Bestimmt den Frequenzabstand des High und Low Wertes bei der übertragung im FSK-Betrieb. Basis ist der mp wert.
+'-unknow- (0) = ??? (Standard = 0) (Auch im Datenblatt von IA4420 so beschrieben)
+'p... = Bestimmt die relative Ausgangsleistung des Senders anhand des dBm-Wertes (Dezibel [Grösse: Milliwat]) 3 dBm schritte. (000=0 / 001=-3 / 010=-6 / ...). Der Wert steht im zusammenhang mit der angeschlossenen Antennen-Impedanz.
+
+
+'=== Wake-Up Timer ===
+'Bestimmt die Zeitperiode der zyklischen Einschaltung des WakeUp-Timers
+'Hex = e & xxx
+'Bit-Syntax: 111 | R4 | R3 | R2 | R1 | R0 | M7 | M6 | M5 | M4 | M3 | M2 | M1 | M0
+'R = Exponent der Zeit
+'M = Zeit
+
+
+'=== Low Duty-Cycle ===
+'Bestimmt die maximale Sendezeit pro Stunde. Dies ist wichtig, um sich an gesetzliche Frequenzzuteilungsrichtlinien zu halten, die bestimmen, wie lang jemand mit einer definierten Sendeleistung auf einer bestimmten Frequenz (mit eventuell definierter Betierbsart [Modulationstyp]) senden darf.)
+'hex = 6400 + Bits
+'Bit-Syntax: 1100100 | r| d6 | d5 | d4 | d3 | d2 | d1 | d0 | en
+'r =  ??????????????????
+'d... = Einschaltdauer während der zyklischen Einschaltung
+'en = zyklischen Einschaltung akltivieren
+
+
+'=== RX FIFO Read ===
+Hex = b000
+'Bit-Syntax: 1011000000000000
+'Dieses Commando löst die Rückgabe eines Datenbytes (syncron mit dem 8ten Bit) aus.
+'Es ist nötig das das ef (RX-FIFO) Bit im Configuration Setting gesezt wurde, um diese Funktion nutzen zu können!
+
+
+'=== TX Register Write ===
+'Dieses Kommando schreibt daten in den TX Puffer. Wenn der Sender aktiv ist, wird dieses sofort gesendet. el (TX-Register) muss im Configuration Setting Kommando aktiv sein.
+'Hex = b8 & xx
+'Bit-Syntax: 10111000 | DataByteToSend
+'DataByteToSend = Das Datenbyte, welches gesendet werden soll.
+
+
+'=== Status Read ===
+'Dieses Kommando löst die Rückgabe des Statusregisters aus, welches nach der ersten 0 im ersten Bit syncron übertragen wird.
+'Hex = 0000
+'Bit-Syntax: 0000000000000000<000>
+'Rückgabe-Syntax: x0 | x1 | x2 | x3 | x4 | x5 | x6 | x7 | x8 | x9 | x10 | x11 | x12 | x13 | x14 | x15 | x16 | x17 | x18
+x0 -> x5 = Interrupt bits
+x6 -> x15 = Status Bits
+x16 -> x18 = FIFO
+'x0 = FFIT / RGIT (RGIT = TX Register ist bereit neue Daten zu senden ... kann mit dem TX Register gelöscht werden)(FFIT = Die anzahl der Datenbits im FIFO Puffer hat das eingestellte Limit erreicht. Kann mit einer der FIFO-Lese methoden gelöscht werden)
+'x1 = POR (PowerOnReset)
+'x2 = FFOV / RGUR (RGUR = Der Datenstrom beim Senden ist abgerissen, da nicht schnell genug Daten nachgeladen wurden)(FFOV = Der RX FIFO ist übergelaufen)
+'x3 = WKUP
+'x4 = EXT
+'x5 = LBD
+'x6 = FFBM (Der FIFO Puffer ist leer)
+'x7 = RSSI/ATS (ATS = )(RSSI = Die Signalstärke ist über dem eingestelltem Limit)
+'x8 = DQD 
+'x9 = CRL 
+'x10 = ATGL
+'x11 = OFFS_4
+'x12 = OFFS_3
+'x13 = OFFS_2
+'x14 = OFFS_1
+'x15 = OFFS_0
+'x16 = FO
+'x17 = FO+1
+'x18 = FO+2

@@ -1,0 +1,20 @@
+19:39:28 **** Incremental Build of configuration Release for project Datenlogger-Rakete ****
+make all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328p Datenlogger-Rakete.elf
+AVR Memory Usage
+----------------
+Device: atmega328p
+
+Program:    2472 bytes (7.5% Full)
+(.text + .data + .bootloader)
+
+Data:        202 bytes (9.9% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+19:39:28 Build Finished (took 83ms)
+

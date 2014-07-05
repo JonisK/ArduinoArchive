@@ -1,0 +1,2 @@
+Dilettantischer Versuch, mit dem RFM12 Funkmodul zu sprechen. *.ino kann mit der Arduino IDE oder Atmel Studio + Visual Micro kompiliert werden.
+Bisheriger Erfolg: Status Bytes auslesen. Sämtliche Sendebefehle konnten mit Fritz' Hack-SDR nicht erkannt werden - vielleicht liegt das aber auch am SDR.

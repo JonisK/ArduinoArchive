@@ -1,0 +1,1572 @@
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00001 ;--------------------------------------------------------
+               00002 ; File Created by SDCC : free open source ANSI-C Compiler
+               00003 ; Version 2.9.0 #5416 (Jul 24 2010) (UNIX)
+               00004 ; This file was generated Sun Aug  8 12:38:45 2010
+               00005 ;--------------------------------------------------------
+               00006 ; PIC port for the 14-bit core
+               00007 ;--------------------------------------------------------
+               00008         .file   "eeprom.c"
+               00009         list    p=16f88
+               00010         radix dec
+               00011         include "p16f88.inc"
+               00001         LIST
+               00002 ; P16F88.INC  Standard Header File, Version 1.00    Microchip Technology, Inc.
+               00401         LIST
+               00012 ;--------------------------------------------------------
+               00013 ; external declarations
+               00014 ;--------------------------------------------------------
+               00015         extern  _ADCON0_bits
+               00016         extern  _ADCON1_bits
+               00017         extern  _CCP1CON_bits
+               00018         extern  _CMCON_bits
+               00019         extern  _CVRCON_bits
+               00020         extern  _EECON1_bits
+               00021         extern  _INTCON_bits
+               00022         extern  _OPTION_REG_bits
+               00023         extern  _OSCCON_bits
+               00024         extern  _OSCTUNE_bits
+               00025         extern  _PCON_bits
+               00026         extern  _PIE1_bits
+               00027         extern  _PIE2_bits
+               00028         extern  _PIR1_bits
+               00029         extern  _PIR2_bits
+               00030         extern  _PORTA_bits
+               00031         extern  _PORTB_bits
+               00032         extern  _RCSTA_bits
+               00033         extern  _SSPCON_bits
+               00034         extern  _SSPSTAT_bits
+               00035         extern  _STATUS_bits
+               00036         extern  _T1CON_bits
+               00037         extern  _T2CON_bits
+               00038         extern  _TRISA_bits
+               00039         extern  _TRISB_bits
+               00040         extern  _TXSTA_bits
+               00041         extern  _WDTCON_bits
+               00042         extern  _INDF
+               00043         extern  _TMR0
+               00044         extern  _PCL
+               00045         extern  _STATUS
+               00046         extern  _FSR
+               00047         extern  _PORTA
+               00048         extern  _PORTB
+               00049         extern  _PCLATH
+               00050         extern  _INTCON
+               00051         extern  _PIR1
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00052         extern  _PIR2
+               00053         extern  _TMR1L
+               00054         extern  _TMR1H
+               00055         extern  _T1CON
+               00056         extern  _TMR2
+               00057         extern  _T2CON
+               00058         extern  _SSPBUF
+               00059         extern  _SSPCON
+               00060         extern  _CCPR1L
+               00061         extern  _CCPR1H
+               00062         extern  _CCP1CON
+               00063         extern  _RCSTA
+               00064         extern  _TXREG
+               00065         extern  _RCREG
+               00066         extern  _ADRESH
+               00067         extern  _ADCON0
+               00068         extern  _OPTION_REG
+               00069         extern  _TRISA
+               00070         extern  _TRISB
+               00071         extern  _PIE1
+               00072         extern  _PIE2
+               00073         extern  _PCON
+               00074         extern  _OSCCON
+               00075         extern  _OSCTUNE
+               00076         extern  _PR2
+               00077         extern  _SSPADD
+               00078         extern  _SSPSTAT
+               00079         extern  _TXSTA
+               00080         extern  _SPBRG
+               00081         extern  _ANSEL
+               00082         extern  _CMCON
+               00083         extern  _CVRCON
+               00084         extern  _ADRESL
+               00085         extern  _ADCON1
+               00086         extern  _WDTCON
+               00087         extern  _EEDATA
+               00088         extern  _EEADR
+               00089         extern  _EEDATH
+               00090         extern  _EEADRH
+               00091         extern  _EECON1
+               00092         extern  _EECON2
+               00093         extern  __gptrget1
+               00094         extern  __gptrput1
+               00095 
+               00096         extern PSAVE
+               00097         extern SSAVE
+               00098         extern WSAVE
+               00099         extern STK12
+               00100         extern STK11
+               00101         extern STK10
+               00102         extern STK09
+               00103         extern STK08
+               00104         extern STK07
+               00105         extern STK06
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00106         extern STK05
+               00107         extern STK04
+               00108         extern STK03
+               00109         extern STK02
+               00110         extern STK01
+               00111         extern STK00
+               00112 ;--------------------------------------------------------
+               00113 ; global declarations
+               00114 ;--------------------------------------------------------
+               00115         global  _eeprom_read
+               00116         global  _eeprom_write
+               00117 
+               00118 ;--------------------------------------------------------
+               00119 ; global definitions
+               00120 ;--------------------------------------------------------
+               00121 ;--------------------------------------------------------
+               00122 ; absolute symbol definitions
+               00123 ;--------------------------------------------------------
+               00124 ;--------------------------------------------------------
+               00125 ; compiler-defined variables
+               00126 ;--------------------------------------------------------
+               00127 UDL_eeprom_0    udata
+               00128 r0x100F res     1
+               00129 r0x100E res     1
+               00130 r0x1012 res     1
+               00131 r0x1011 res     1
+               00132 r0x1010 res     1
+               00133 r0x1014 res     1
+               00134 r0x1013 res     1
+               00135 r0x1015 res     1
+               00136 r0x1016 res     1
+               00137 r0x1017 res     1
+               00138 r0x1018 res     1
+               00139 r0x1019 res     1
+               00140 r0x1001 res     1
+               00141 r0x1000 res     1
+               00142 r0x1004 res     1
+               00143 r0x1003 res     1
+               00144 r0x1002 res     1
+               00145 r0x1006 res     1
+               00146 r0x1005 res     1
+               00147 r0x1007 res     1
+               00148 r0x1008 res     1
+               00149 r0x1009 res     1
+               00150 r0x100A res     1
+               00151 r0x100B res     1
+               00152 r0x100C res     1
+               00153 ;--------------------------------------------------------
+               00154 ; initialized data
+               00155 ;--------------------------------------------------------
+               00156 ;--------------------------------------------------------
+               00157 ; overlayable items in internal ram 
+               00158 ;--------------------------------------------------------
+               00159 ;       udata_ovr
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00160 ;--------------------------------------------------------
+               00161 ; code
+               00162 ;--------------------------------------------------------
+               00163 code_eeprom     code
+               00164 ;***
+               00165 ;  pBlock Stats: dbName = C
+               00166 ;***
+               00167 ;entry:  _eeprom_read   ;Function start
+               00168 ; 2 exit points
+               00169 ;has an exit
+               00170 ;functions called:
+               00171 ;   __gptrput1
+               00172 ;   __gptrput1
+               00173 ;20 compiler assigned registers:
+               00174 ;   r0x1000
+               00175 ;   STK00
+               00176 ;   r0x1001
+               00177 ;   STK01
+               00178 ;   r0x1002
+               00179 ;   STK02
+               00180 ;   r0x1003
+               00181 ;   STK03
+               00182 ;   r0x1004
+               00183 ;   STK04
+               00184 ;   r0x1005
+               00185 ;   STK05
+               00186 ;   r0x1006
+               00187 ;   r0x1007
+               00188 ;   r0x1008
+               00189 ;   r0x1009
+               00190 ;   r0x100A
+               00191 ;   r0x100B
+               00192 ;   r0x100C
+               00193 ;   r0x100D
+               00194 ;; Starting pCode block
+               00195 ;; gen.c:2261:resultRemat *{*
+               00196 ;; gen.c:2597:genLabel *{*
+               00197 ;; ***  genLabel  2600
+               00198 ;; gen.c:2261:resultRemat *{*
+               00199 ;; gen.c:2283:genFunction *{*
+               00200 ;; ***  genFunction  2285 curr label offset=4previous max_key=18 
+0000 00201 _eeprom_read    ;Function start
+               00202 ; 2 exit points
+               00203 ;; gen.c:2261:resultRemat *{*
+               00204 ;; gen.c:6739:genReceive *{*
+               00205 ;; ***  genReceive  6740
+               00206 ;;      721 register type nRegs=2
+               00207 ;; gen.c:1866:assignResultValue *{*
+               00208 ;; ***  assignResultValue  1868
+               00209 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x1054, size=2, right -=-, size=0
+               00210 ; >>> gen.c:1367:movwf
+               00211 ;;      1109 rIdx = r0x1055 
+               00212         .line   45; "eeprom.c"  void eeprom_read(int pos,char *str,int len){
+0000 0000 0000 00213         BANKSEL r0x1000
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0002 0080      00214         MOVWF   r0x1000
+               00215 ; >>> gen.c:1393:get_returnvalue
+               00216 ;; ***  popRegFromIdx,1043  , rIdx=0x7f
+0003 0800      00217         MOVF    STK00,W
+               00218 ; >>> gen.c:1367:movwf
+               00219 ;;      1109 rIdx = r0x1054 
+0004 0080      00220         MOVWF   r0x1001
+               00221 ;; gen.c:2261:resultRemat *{*
+               00222 ;; gen.c:6739:genReceive *{*
+               00223 ;; ***  genReceive  6740
+               00224 ;;      721 register type nRegs=3
+               00225 ;; gen.c:1866:assignResultValue *{*
+               00226 ;; ***  assignResultValue  1868
+               00227 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x1056, size=3, right -=-, size=0
+               00228 ; >>> gen.c:1393:get_returnvalue
+               00229 ;; ***  popRegFromIdx,1043  , rIdx=0x7e
+0005 0800      00230         MOVF    STK01,W
+               00231 ; >>> gen.c:1367:movwf
+               00232 ;;      1109 rIdx = r0x1058 
+0006 0080      00233         MOVWF   r0x1002
+               00234 ; >>> gen.c:1393:get_returnvalue
+               00235 ;; ***  popRegFromIdx,1043  , rIdx=0x7d
+0007 0800      00236         MOVF    STK02,W
+               00237 ; >>> gen.c:1367:movwf
+               00238 ;;      1109 rIdx = r0x1057 
+0008 0080      00239         MOVWF   r0x1003
+               00240 ; >>> gen.c:1393:get_returnvalue
+               00241 ;; ***  popRegFromIdx,1043  , rIdx=0x7c
+0009 0800      00242         MOVF    STK03,W
+               00243 ; >>> gen.c:1367:movwf
+               00244 ;;      1109 rIdx = r0x1056 
+000A 0080      00245         MOVWF   r0x1004
+               00246 ;; gen.c:2261:resultRemat *{*
+               00247 ;; gen.c:6739:genReceive *{*
+               00248 ;; ***  genReceive  6740
+               00249 ;;      721 register type nRegs=2
+               00250 ;; gen.c:1866:assignResultValue *{*
+               00251 ;; ***  assignResultValue  1868
+               00252 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x1059, size=2, right -=-, size=0
+               00253 ; >>> gen.c:1393:get_returnvalue
+               00254 ;; ***  popRegFromIdx,1043  , rIdx=0x7b
+000B 0800      00255         MOVF    STK04,W
+               00256 ; >>> gen.c:1367:movwf
+               00257 ;;      1109 rIdx = r0x105A 
+000C 0080      00258         MOVWF   r0x1005
+               00259 ; >>> gen.c:1393:get_returnvalue
+               00260 ;; ***  popRegFromIdx,1043  , rIdx=0x7a
+000D 0800      00261         MOVF    STK05,W
+               00262 ; >>> gen.c:1367:movwf
+               00263 ;;      1109 rIdx = r0x1059 
+000E 0080      00264         MOVWF   r0x1006
+               00265 ;; gen.c:2261:resultRemat *{*
+               00266 ;; gen.c:6332:genAssign *{*
+               00267 ;; ***  genAssign  6333
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00268 ;;      721 register type nRegs=2
+               00269 ;;      721 register type nRegs=2
+               00270 ;;      line = 6342 result AOP_REG=r0x1054, size=2, left -=-, size=0, right AOP_REG=r0x1054, size=2
+               00271 ;; gen.c:2261:resultRemat *{*
+               00272 ;; gen.c:6332:genAssign *{*
+               00273 ;; ***  genAssign  6333
+               00274 ;;      721 register type nRegs=2
+               00275 ;;      line = 6342 result AOP_REG=r0x105B, size=2, left -=-, size=0, right AOP_LIT=0x00, size=2
+               00276 ;; ***  genAssign  6434
+               00277 ; >>> gen.c:6443:genAssign
+               00278 ;;      1109 rIdx = r0x105B 
+               00279         .line   48; "eeprom.c"  for(i=0;i<len;i++){             // each char in str
+000F 0180      00280         CLRF    r0x1007
+               00281 ;; ***  genAssign  6434
+               00282 ; >>> gen.c:6443:genAssign
+               00283 ;;      1109 rIdx = r0x105C 
+0010 0180      00284         CLRF    r0x1008
+               00285 ;; gen.c:2261:resultRemat *{*
+               00286 ;; gen.c:2597:genLabel *{*
+               00287 ;; ***  genLabel  2600
+               00288 ;; gen.c:2261:resultRemat *{*
+               00289 ;; gen.c:3504:ifxForOp *{*
+               00290 ;; ***  ifxForOp  3506
+               00291 ;; gen.c:3357:genCmpLt *{*
+               00292 ;; ***  genCmpLt  3358
+               00293 ;;      721 register type nRegs=2
+               00294 ;;      721 register type nRegs=2
+               00295 ;; gen.c:3126:genCmp *{*
+               00296 ;; ***  mov2w  1356  offset=1
+               00297 ; >>> gen.c:1361:mov2w
+               00298 ;;      1109 rIdx = r0x105C 
+0011 00299 _00127_DS_
+0011 0000 0000 00300         BANKSEL r0x1008
+0013 0800      00301         MOVF    r0x1008,W
+               00302 ; >>> gen.c:3256:genCmp
+0014 3E80      00303         ADDLW   0x80
+               00304 ; >>> gen.c:3257:genCmp
+0015 0080      00305         MOVWF   r0x1009
+               00306 ;; ***  mov2w  1356  offset=1
+               00307 ; >>> gen.c:1361:mov2w
+               00308 ;;      1109 rIdx = r0x105A 
+0016 0800      00309         MOVF    r0x1005,W
+               00310 ; >>> gen.c:3259:genCmp
+0017 3E80      00311         ADDLW   0x80
+               00312 ; >>> gen.c:3260:genCmp
+0018 0200      00313         SUBWF   r0x1009,W
+               00314 ; >>> gen.c:3270:genCmp
+0019 1D03      00315         BTFSS   STATUS,2
+               00316 ; >>> gen.c:3271:genCmp
+               00317 ;; ***  popGetLabel  key=10, label offset 26
+001A 2800      00318         GOTO    _00136_DS_
+               00319 ; >>> gen.c:3101:pic14_mov2w_regOrLit
+               00320 ;;      1109 rIdx = r0x1059 
+001B 0800      00321         MOVF    r0x1006,W
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00322 ; >>> gen.c:3273:genCmp
+               00323 ;;      1109 rIdx = r0x105B 
+001C 0200      00324         SUBWF   r0x1007,W
+               00325 ;; gen.c:3073:genSkipc *{*
+               00326 ; >>> gen.c:3078:genSkipc
+001D 00327 _00136_DS_
+001D 1803      00328         BTFSC   STATUS,0
+               00329 ; >>> gen.c:3082:genSkipc
+               00330 ;; ***  popGetLabel  key=5, label offset 26
+001E 2800      00331         GOTO    _00131_DS_
+               00332 ;genSkipc:3083: created from rifx:0xbfa72e70
+               00333 ;; gen.c:2261:resultRemat *{*
+               00334 ;; gen.c:2261:resultRemat *{*
+               00335 ;; ***  genPlus  547
+               00336 ;; genarith.c:548:genPlus *{*
+               00337 ;;      721 register type nRegs=3
+               00338 ;;      721 register type nRegs=2
+               00339 ;;      721 register type nRegs=3
+               00340 ;;      line = 554 result AOP_REG=r0x105D, size=3, left AOP_REG=r0x1056, size=3, right AOP_REG=r0x105B, size=2
+               00341 ;; ***  pic14_getDataSize  1426
+               00342 ;; ***  pic14_getDataSize  1446
+               00343 ;; genarith.c:142:genPlusIncr *{*
+               00344 ;; ***  genPlusIncr  144
+               00345 ;;      result AOP_REG, left AOP_REG, right AOP_REG
+               00346 ;; ***  pic14_getDataSize  1426
+               00347 ;; ***  pic14_getDataSize  1446
+               00348 ;; ***  genPlus  653
+               00349 ; >>> genarith.c:662:genPlus
+               00350 ;;      1109 rIdx = r0x105B 
+               00351         .line   49; "eeprom.c"  str[i]=EEPROM_READ(pos++);    // fill str with EEPROM data at position pos
+001F 0000 0000 00352         BANKSEL r0x1007
+0021 0800      00353         MOVF    r0x1007,W
+               00354 ; >>> genarith.c:671:genPlus
+               00355 ;;      1109 rIdx = r0x1056 
+0022 0700      00356         ADDWF   r0x1004,W
+               00357 ; >>> genarith.c:672:genPlus
+               00358 ;;      1109 rIdx = r0x105D 
+0023 0080      00359         MOVWF   r0x1009
+               00360 ; >>> genarith.c:707:genPlus
+               00361 ;;      1109 rIdx = r0x1057 
+0024 0800      00362         MOVF    r0x1003,W
+               00363 ; >>> genarith.c:708:genPlus
+               00364 ;;      1109 rIdx = r0x105E 
+0025 0080      00365         MOVWF   r0x100A
+               00366 ; >>> genarith.c:710:genPlus
+               00367 ;;      1109 rIdx = r0x105C 
+0026 0800      00368         MOVF    r0x1008,W
+               00369 ; >>> genarith.c:711:genPlus
+0027 1803      00370         BTFSC   STATUS,0
+               00371 ; >>> genarith.c:712:genPlus
+               00372 ;;      1109 rIdx = r0x105C 
+0028 0F00      00373         INCFSZ  r0x1008,W
+               00374 ; >>> genarith.c:713:genPlus
+               00375 ;;      1109 rIdx = r0x105E 
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+0029 0780      00376         ADDWF   r0x100A,F
+               00377 ; >>> genarith.c:735:genPlus
+               00378 ;;      1109 rIdx = r0x1058 
+002A 0800      00379         MOVF    r0x1002,W
+               00380 ; >>> genarith.c:736:genPlus
+002B 1803      00381         BTFSC   STATUS,0
+               00382 ; >>> genarith.c:737:genPlus
+002C 3E01      00383         ADDLW   0x01
+               00384 ; >>> genarith.c:738:genPlus
+               00385 ;;      1109 rIdx = r0x105F 
+002D 0080      00386         MOVWF   r0x100B
+               00387 ;; gen.c:2261:resultRemat *{*
+               00388 ;; gen.c:6332:genAssign *{*
+               00389 ;; ***  genAssign  6333
+               00390 ;;      721 register type nRegs=2
+               00391 ;;      721 register type nRegs=2
+               00392 ;;      line = 6342 result AOP_REG=r0x1060, size=2, left -=-, size=0, right AOP_REG=r0x1054, size=2
+               00393 ;; ***  genAssign  6434
+               00394 ;; gen.c:1324:mov2w_op *{*
+               00395 ;; ***  mov2w  1356  offset=0
+               00396 ; >>> gen.c:1361:mov2w
+               00397 ;;      1109 rIdx = r0x1054 
+002E 0800      00398         MOVF    r0x1001,W
+               00399 ; >>> gen.c:6453:genAssign
+               00400 ;;      1109 rIdx = r0x1060 
+002F 0080      00401         MOVWF   r0x100C
+               00402 ;; ***  genAssign  6434
+               00403 ;; gen.c:1324:mov2w_op *{*
+               00404 ;; ***  mov2w  1356  offset=1
+               00405 ; >>> gen.c:1361:mov2w
+               00406 ;;      1109 rIdx = r0x1055 
+0030 0800      00407         MOVF    r0x1000,W
+               00408 ; >>> gen.c:6453:genAssign
+               00409 ;;      1109 rIdx = r0x1061 
+               00410 ;;1     MOVWF   r0x100D
+               00411 ;; gen.c:2261:resultRemat *{*
+               00412 ;; ***  genPlus  547
+               00413 ;; genarith.c:548:genPlus *{*
+               00414 ;;      721 register type nRegs=2
+               00415 ;;      606
+               00416 ;;      line = 554 result AOP_REG=r0x1054, size=2, left AOP_REG=r0x1054, size=2, right AOP_LIT=0x01, size=1
+               00417 ;; ***  pic14_getDataSize  1426
+               00418 ;; genarith.c:142:genPlusIncr *{*
+               00419 ;; ***  genPlusIncr  144
+               00420 ;;      result AOP_REG, left AOP_REG, right AOP_LIT
+               00421 ;;      genPlusIncr  156
+               00422 ; >>> genarith.c:168:genPlusIncr
+               00423 ;;      1109 rIdx = r0x1054 
+0031 0A80      00424         INCF    r0x1001,F
+               00425 ; >>> genarith.c:172:genPlusIncr
+0032 1903      00426         BTFSC   STATUS,2
+               00427 ; >>> genarith.c:173:genPlusIncr
+               00428 ;;      1109 rIdx = r0x1055 
+0033 0A80      00429         INCF    r0x1000,F
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00430 ;; gen.c:2261:resultRemat *{*
+               00431 ;; gen.c:6521:genCast *{*
+               00432 ;; ***  genCast  6522
+               00433 ;;      721 register type nRegs=2
+               00434 ;; ***  aopForSym 350
+               00435 ;;      361 sym->rname = _EEADR, size = 1
+               00436 ;;      line = 6530 result AOP_DIR=_EEADR, size=1, left -=-, size=0, right AOP_REG=r0x1060, size=2
+               00437 ;; ***  genCast  6636
+               00438 ; >>> gen.c:6656:genCast
+               00439 ;;      1109 rIdx = r0x1060 
+0034 0800      00440         MOVF    r0x100C,W
+               00441 ; >>> gen.c:6657:genCast
+               00442 ;;      1013
+               00443 ;;      1029  _EEADR   offset=0
+0035 0000 0000 00444         BANKSEL _EEADR
+0037 0080      00445         MOVWF   _EEADR
+               00446 ;; gen.c:2261:resultRemat *{*
+               00447 ;; gen.c:2261:resultRemat *{*
+               00448 ;; gen.c:6117:genPointerSet *{*
+               00449 ;; ***  genPointerSet  6118
+               00450 ;; gen.c:5945:genNearPointerSet *{*
+               00451 ;; ***  genNearPointerSet  5946
+               00452 ;;      641
+               00453 ;;      aopForRemat 425
+               00454 ;;      446: rname _EECON1_bits, val 0, const = 0
+               00455 ;; ***  genNearPointerSet  5963
+               00456 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00457 ;;      _EECON1_bits
+               00458 ;;      line = 5965 result AOP_PCODE=_EECON1_bits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+               00459 ;; gen.c:5694:genPackBits *{*
+               00460 ;; ***  genPackBits  5695
+               00461 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00462 ;;      _EECON1_bits
+               00463 ; >>> gen.c:5720:genPackBits
+0038 0000 0000 00464         BANKSEL _EECON1_bits
+003A 1400      00465         BSF     _EECON1_bits,0
+               00466 ;; gen.c:2261:resultRemat *{*
+               00467 ;; gen.c:6117:genPointerSet *{*
+               00468 ;; ***  genPointerSet  6118
+               00469 ;; gen.c:6050:genGenPointerSet *{*
+               00470 ;; ***  genGenPointerSet  6051
+               00471 ;; ***  aopForSym 350
+               00472 ;;      361 sym->rname = _EEDATA, size = 1
+               00473 ;;      721 register type nRegs=3
+               00474 ;;      line = 6056 result AOP_REG=r0x105D, size=3, left AOP_DIR=_EEDATA, size=1, right -=-, size=0
+               00475 ;; gen.c:1324:mov2w_op *{*
+               00476 ;; ***  mov2w  1356  offset=0
+               00477 ; >>> gen.c:1361:mov2w
+               00478 ;;      1013
+               00479 ;;      1029  _EEDATA   offset=0
+003B 0000 0000 00480         BANKSEL _EEDATA
+003D 0800      00481         MOVF    _EEDATA,W
+               00482 ; >>> gen.c:6090:genGenPointerSet
+               00483 ;; ***  popRegFromIdx,1043  , rIdx=0x7d
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+003E 0080      00484         MOVWF   STK02
+               00485 ;; ***  mov2w  1356  offset=0
+               00486 ; >>> gen.c:1361:mov2w
+               00487 ;;      1109 rIdx = r0x105D 
+003F 0000 0000 00488         BANKSEL r0x1009
+0041 0800      00489         MOVF    r0x1009,W
+               00490 ; >>> gen.c:6097:genGenPointerSet
+               00491 ;; ***  popRegFromIdx,1043  , rIdx=0x7e
+0042 0080      00492         MOVWF   STK01
+               00493 ;; ***  mov2w  1356  offset=1
+               00494 ; >>> gen.c:1361:mov2w
+               00495 ;;      1109 rIdx = r0x105E 
+0043 0800      00496         MOVF    r0x100A,W
+               00497 ; >>> gen.c:6099:genGenPointerSet
+               00498 ;; ***  popRegFromIdx,1043  , rIdx=0x7f
+0044 0080      00499         MOVWF   STK00
+               00500 ;; ***  mov2w  1356  offset=2
+               00501 ; >>> gen.c:1361:mov2w
+               00502 ;;      1109 rIdx = r0x105F 
+0045 0800      00503         MOVF    r0x100B,W
+               00504 ; >>> gen.c:1402:call_libraryfunc
+0046 0000      00505         PAGESEL __gptrput1
+               00506 ; >>> gen.c:1404:call_libraryfunc
+0047 2000      00507         CALL    __gptrput1
+               00508 ; >>> gen.c:1406:call_libraryfunc
+0048 0000      00509         PAGESEL $
+               00510 ;; gen.c:2261:resultRemat *{*
+               00511 ;; ***  genPlus  547
+               00512 ;; genarith.c:548:genPlus *{*
+               00513 ;;      721 register type nRegs=2
+               00514 ;;      606
+               00515 ;;      line = 554 result AOP_REG=r0x105B, size=2, left AOP_REG=r0x105B, size=2, right AOP_LIT=0x01, size=1
+               00516 ;; ***  pic14_getDataSize  1426
+               00517 ;; genarith.c:142:genPlusIncr *{*
+               00518 ;; ***  genPlusIncr  144
+               00519 ;;      result AOP_REG, left AOP_REG, right AOP_LIT
+               00520 ;;      genPlusIncr  156
+               00521 ; >>> genarith.c:168:genPlusIncr
+               00522 ;;      1109 rIdx = r0x105B 
+               00523         .line   48; "eeprom.c"  for(i=0;i<len;i++){             // each char in str
+0049 0000 0000 00524         BANKSEL r0x1007
+004B 0A80      00525         INCF    r0x1007,F
+               00526 ; >>> genarith.c:172:genPlusIncr
+004C 1903      00527         BTFSC   STATUS,2
+               00528 ; >>> genarith.c:173:genPlusIncr
+               00529 ;;      1109 rIdx = r0x105C 
+004D 0A80      00530         INCF    r0x1008,F
+               00531 ;; gen.c:2261:resultRemat *{*
+               00532 ;; gen.c:2614:genGoto *{*
+               00533 ; >>> gen.c:2616:genGoto
+               00534 ;; ***  popGetLabel  key=1, label offset 26
+004E 2800      00535         GOTO    _00127_DS_
+               00536 ;; gen.c:2261:resultRemat *{*
+               00537 ;; gen.c:2597:genLabel *{*
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00538 ;; ***  genLabel  2600
+               00539 ;; gen.c:2261:resultRemat *{*
+               00540 ;; gen.c:2435:genEndFunction *{*
+               00541 ;; ***  genEndFunction  2437
+004F 00542 _00131_DS_
+004F 0008      00543         RETURN  
+               00544 ; exit point of _eeprom_read
+               00545 
+               00546 ;***
+               00547 ;  pBlock Stats: dbName = C
+               00548 ;***
+               00549 ;entry:  _eeprom_write  ;Function start
+               00550 ; 2 exit points
+               00551 ;has an exit
+               00552 ;functions called:
+               00553 ;   __gptrget1
+               00554 ;   __gptrget1
+               00555 ;18 compiler assigned registers:
+               00556 ;   r0x100E
+               00557 ;   STK00
+               00558 ;   r0x100F
+               00559 ;   STK01
+               00560 ;   r0x1010
+               00561 ;   STK02
+               00562 ;   r0x1011
+               00563 ;   STK03
+               00564 ;   r0x1012
+               00565 ;   STK04
+               00566 ;   r0x1013
+               00567 ;   STK05
+               00568 ;   r0x1014
+               00569 ;   r0x1015
+               00570 ;   r0x1016
+               00571 ;   r0x1017
+               00572 ;   r0x1018
+               00573 ;   r0x1019
+               00574 ;; Starting pCode block
+               00575 ;; gen.c:2261:resultRemat *{*
+               00576 ;; gen.c:2597:genLabel *{*
+               00577 ;; ***  genLabel  2600
+               00578 ;; gen.c:2261:resultRemat *{*
+               00579 ;; gen.c:2283:genFunction *{*
+               00580 ;; ***  genFunction  2285 curr label offset=0previous max_key=0 
+0050 00581 _eeprom_write   ;Function start
+               00582 ; 2 exit points
+               00583 ;; gen.c:2261:resultRemat *{*
+               00584 ;; gen.c:6739:genReceive *{*
+               00585 ;; ***  genReceive  6740
+               00586 ;;      721 register type nRegs=2
+               00587 ;; gen.c:1866:assignResultValue *{*
+               00588 ;; ***  assignResultValue  1868
+               00589 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x1048, size=2, right -=-, size=0
+               00590 ; >>> gen.c:1367:movwf
+               00591 ;;      1109 rIdx = r0x1049 
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00592         .line   24; "eeprom.c"  void eeprom_write(int pos,char *str,int len){
+0050 0000 0000 00593         BANKSEL r0x100E
+0052 0080      00594         MOVWF   r0x100E
+               00595 ; >>> gen.c:1393:get_returnvalue
+               00596 ;; ***  popRegFromIdx,1043  , rIdx=0x7f
+0053 0800      00597         MOVF    STK00,W
+               00598 ; >>> gen.c:1367:movwf
+               00599 ;;      1109 rIdx = r0x1048 
+0054 0080      00600         MOVWF   r0x100F
+               00601 ;; gen.c:2261:resultRemat *{*
+               00602 ;; gen.c:6739:genReceive *{*
+               00603 ;; ***  genReceive  6740
+               00604 ;;      721 register type nRegs=3
+               00605 ;; gen.c:1866:assignResultValue *{*
+               00606 ;; ***  assignResultValue  1868
+               00607 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x104A, size=3, right -=-, size=0
+               00608 ; >>> gen.c:1393:get_returnvalue
+               00609 ;; ***  popRegFromIdx,1043  , rIdx=0x7e
+0055 0800      00610         MOVF    STK01,W
+               00611 ; >>> gen.c:1367:movwf
+               00612 ;;      1109 rIdx = r0x104C 
+0056 0080      00613         MOVWF   r0x1010
+               00614 ; >>> gen.c:1393:get_returnvalue
+               00615 ;; ***  popRegFromIdx,1043  , rIdx=0x7d
+0057 0800      00616         MOVF    STK02,W
+               00617 ; >>> gen.c:1367:movwf
+               00618 ;;      1109 rIdx = r0x104B 
+0058 0080      00619         MOVWF   r0x1011
+               00620 ; >>> gen.c:1393:get_returnvalue
+               00621 ;; ***  popRegFromIdx,1043  , rIdx=0x7c
+0059 0800      00622         MOVF    STK03,W
+               00623 ; >>> gen.c:1367:movwf
+               00624 ;;      1109 rIdx = r0x104A 
+005A 0080      00625         MOVWF   r0x1012
+               00626 ;; gen.c:2261:resultRemat *{*
+               00627 ;; gen.c:6739:genReceive *{*
+               00628 ;; ***  genReceive  6740
+               00629 ;;      721 register type nRegs=2
+               00630 ;; gen.c:1866:assignResultValue *{*
+               00631 ;; ***  assignResultValue  1868
+               00632 ;;      line = 1870 result -=-, size=0, left AOP_REG=r0x104D, size=2, right -=-, size=0
+               00633 ; >>> gen.c:1393:get_returnvalue
+               00634 ;; ***  popRegFromIdx,1043  , rIdx=0x7b
+005B 0800      00635         MOVF    STK04,W
+               00636 ; >>> gen.c:1367:movwf
+               00637 ;;      1109 rIdx = r0x104E 
+005C 0080      00638         MOVWF   r0x1013
+               00639 ; >>> gen.c:1393:get_returnvalue
+               00640 ;; ***  popRegFromIdx,1043  , rIdx=0x7a
+005D 0800      00641         MOVF    STK05,W
+               00642 ; >>> gen.c:1367:movwf
+               00643 ;;      1109 rIdx = r0x104D 
+005E 0080      00644         MOVWF   r0x1014
+               00645 ;; gen.c:2261:resultRemat *{*
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00646 ;; gen.c:6332:genAssign *{*
+               00647 ;; ***  genAssign  6333
+               00648 ;;      721 register type nRegs=2
+               00649 ;;      721 register type nRegs=2
+               00650 ;;      line = 6342 result AOP_REG=r0x1048, size=2, left -=-, size=0, right AOP_REG=r0x1048, size=2
+               00651 ;; gen.c:2261:resultRemat *{*
+               00652 ;; gen.c:6332:genAssign *{*
+               00653 ;; ***  genAssign  6333
+               00654 ;;      721 register type nRegs=2
+               00655 ;;      line = 6342 result AOP_REG=r0x104F, size=2, left -=-, size=0, right AOP_LIT=0x00, size=2
+               00656 ;; ***  genAssign  6434
+               00657 ; >>> gen.c:6443:genAssign
+               00658 ;;      1109 rIdx = r0x104F 
+               00659         .line   27; "eeprom.c"  for(i=0;i<len;i++){     // each char in str
+005F 0180      00660         CLRF    r0x1015
+               00661 ;; ***  genAssign  6434
+               00662 ; >>> gen.c:6443:genAssign
+               00663 ;;      1109 rIdx = r0x1050 
+0060 0180      00664         CLRF    r0x1016
+               00665 ;; gen.c:2261:resultRemat *{*
+               00666 ;; gen.c:2597:genLabel *{*
+               00667 ;; ***  genLabel  2600
+               00668 ;; gen.c:2261:resultRemat *{*
+               00669 ;; gen.c:3504:ifxForOp *{*
+               00670 ;; ***  ifxForOp  3506
+               00671 ;; gen.c:3357:genCmpLt *{*
+               00672 ;; ***  genCmpLt  3358
+               00673 ;;      721 register type nRegs=2
+               00674 ;;      721 register type nRegs=2
+               00675 ;; gen.c:3126:genCmp *{*
+               00676 ;; ***  mov2w  1356  offset=1
+               00677 ; >>> gen.c:1361:mov2w
+               00678 ;;      1109 rIdx = r0x1050 
+0061 00679 _00111_DS_
+0061 0000 0000 00680         BANKSEL r0x1016
+0063 0800      00681         MOVF    r0x1016,W
+               00682 ; >>> gen.c:3256:genCmp
+0064 3E80      00683         ADDLW   0x80
+               00684 ; >>> gen.c:3257:genCmp
+0065 0080      00685         MOVWF   r0x1017
+               00686 ;; ***  mov2w  1356  offset=1
+               00687 ; >>> gen.c:1361:mov2w
+               00688 ;;      1109 rIdx = r0x104E 
+0066 0800      00689         MOVF    r0x1013,W
+               00690 ; >>> gen.c:3259:genCmp
+0067 3E80      00691         ADDLW   0x80
+               00692 ; >>> gen.c:3260:genCmp
+0068 0200      00693         SUBWF   r0x1017,W
+               00694 ; >>> gen.c:3270:genCmp
+0069 1D03      00695         BTFSS   STATUS,2
+               00696 ; >>> gen.c:3271:genCmp
+               00697 ;; ***  popGetLabel  key=18, label offset 4
+006A 2800      00698         GOTO    _00122_DS_
+               00699 ; >>> gen.c:3101:pic14_mov2w_regOrLit
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00700 ;;      1109 rIdx = r0x104D 
+006B 0800      00701         MOVF    r0x1014,W
+               00702 ; >>> gen.c:3273:genCmp
+               00703 ;;      1109 rIdx = r0x104F 
+006C 0200      00704         SUBWF   r0x1015,W
+               00705 ;; gen.c:3073:genSkipc *{*
+               00706 ; >>> gen.c:3078:genSkipc
+006D 00707 _00122_DS_
+006D 1803      00708         BTFSC   STATUS,0
+               00709 ; >>> gen.c:3082:genSkipc
+               00710 ;; ***  popGetLabel  key=11, label offset 4
+006E 2800      00711         GOTO    _00115_DS_
+               00712 ;genSkipc:3083: created from rifx:0xbfa72e70
+               00713 ;; gen.c:2261:resultRemat *{*
+               00714 ;; gen.c:2261:resultRemat *{*
+               00715 ;; gen.c:6332:genAssign *{*
+               00716 ;; ***  genAssign  6333
+               00717 ;;      721 register type nRegs=2
+               00718 ;;      721 register type nRegs=2
+               00719 ;;      line = 6342 result AOP_REG=r0x1051, size=2, left -=-, size=0, right AOP_REG=r0x1048, size=2
+               00720 ;; ***  genAssign  6434
+               00721 ;; gen.c:1324:mov2w_op *{*
+               00722 ;; ***  mov2w  1356  offset=0
+               00723 ; >>> gen.c:1361:mov2w
+               00724 ;;      1109 rIdx = r0x1048 
+               00725         .line   28; "eeprom.c"  EEADR=pos++;          // EEPROM position
+006F 0000 0000 00726         BANKSEL r0x100F
+0071 0800      00727         MOVF    r0x100F,W
+               00728 ; >>> gen.c:6453:genAssign
+               00729 ;;      1109 rIdx = r0x1051 
+0072 0080      00730         MOVWF   r0x1017
+               00731 ;; ***  genAssign  6434
+               00732 ;; gen.c:1324:mov2w_op *{*
+               00733 ;; ***  mov2w  1356  offset=1
+               00734 ; >>> gen.c:1361:mov2w
+               00735 ;;      1109 rIdx = r0x1049 
+0073 0800      00736         MOVF    r0x100E,W
+               00737 ; >>> gen.c:6453:genAssign
+               00738 ;;      1109 rIdx = r0x1052 
+0074 0080      00739         MOVWF   r0x1018
+               00740 ;; gen.c:2261:resultRemat *{*
+               00741 ;; ***  genPlus  547
+               00742 ;; genarith.c:548:genPlus *{*
+               00743 ;;      721 register type nRegs=2
+               00744 ;;      606
+               00745 ;;      line = 554 result AOP_REG=r0x1048, size=2, left AOP_REG=r0x1048, size=2, right AOP_LIT=0x01, size=1
+               00746 ;; ***  pic14_getDataSize  1426
+               00747 ;; genarith.c:142:genPlusIncr *{*
+               00748 ;; ***  genPlusIncr  144
+               00749 ;;      result AOP_REG, left AOP_REG, right AOP_LIT
+               00750 ;;      genPlusIncr  156
+               00751 ; >>> genarith.c:168:genPlusIncr
+               00752 ;;      1109 rIdx = r0x1048 
+0075 0A80      00753         INCF    r0x100F,F
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00754 ; >>> genarith.c:172:genPlusIncr
+0076 1903      00755         BTFSC   STATUS,2
+               00756 ; >>> genarith.c:173:genPlusIncr
+               00757 ;;      1109 rIdx = r0x1049 
+0077 0A80      00758         INCF    r0x100E,F
+               00759 ;; gen.c:2261:resultRemat *{*
+               00760 ;; gen.c:6521:genCast *{*
+               00761 ;; ***  genCast  6522
+               00762 ;;      721 register type nRegs=2
+               00763 ;; ***  aopForSym 350
+               00764 ;;      361 sym->rname = _EEADR, size = 1
+               00765 ;;      line = 6530 result AOP_DIR=_EEADR, size=1, left -=-, size=0, right AOP_REG=r0x1051, size=2
+               00766 ;; ***  genCast  6636
+               00767 ; >>> gen.c:6656:genCast
+               00768 ;;      1109 rIdx = r0x1051 
+0078 0800      00769         MOVF    r0x1017,W
+               00770 ; >>> gen.c:6657:genCast
+               00771 ;;      1013
+               00772 ;;      1029  _EEADR   offset=0
+0079 0000 0000 00773         BANKSEL _EEADR
+007B 0080      00774         MOVWF   _EEADR
+               00775 ;; gen.c:2261:resultRemat *{*
+               00776 ;; ***  genPlus  547
+               00777 ;; genarith.c:548:genPlus *{*
+               00778 ;;      721 register type nRegs=3
+               00779 ;;      721 register type nRegs=2
+               00780 ;;      721 register type nRegs=3
+               00781 ;;      line = 554 result AOP_REG=r0x1051, size=3, left AOP_REG=r0x104A, size=3, right AOP_REG=r0x104F, size=2
+               00782 ;; ***  pic14_getDataSize  1426
+               00783 ;; ***  pic14_getDataSize  1446
+               00784 ;; genarith.c:142:genPlusIncr *{*
+               00785 ;; ***  genPlusIncr  144
+               00786 ;;      result AOP_REG, left AOP_REG, right AOP_REG
+               00787 ;; ***  pic14_getDataSize  1426
+               00788 ;; ***  pic14_getDataSize  1446
+               00789 ;; ***  genPlus  653
+               00790 ; >>> genarith.c:662:genPlus
+               00791 ;;      1109 rIdx = r0x104F 
+               00792         .line   29; "eeprom.c"  EEDATA=str[i];        // set the data to write
+007C 0000 0000 00793         BANKSEL r0x1015
+007E 0800      00794         MOVF    r0x1015,W
+               00795 ; >>> genarith.c:671:genPlus
+               00796 ;;      1109 rIdx = r0x104A 
+007F 0700      00797         ADDWF   r0x1012,W
+               00798 ; >>> genarith.c:672:genPlus
+               00799 ;;      1109 rIdx = r0x1051 
+0080 0080      00800         MOVWF   r0x1017
+               00801 ; >>> genarith.c:707:genPlus
+               00802 ;;      1109 rIdx = r0x104B 
+0081 0800      00803         MOVF    r0x1011,W
+               00804 ; >>> genarith.c:708:genPlus
+               00805 ;;      1109 rIdx = r0x1052 
+0082 0080      00806         MOVWF   r0x1018
+               00807 ; >>> genarith.c:710:genPlus
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00808 ;;      1109 rIdx = r0x1050 
+0083 0800      00809         MOVF    r0x1016,W
+               00810 ; >>> genarith.c:711:genPlus
+0084 1803      00811         BTFSC   STATUS,0
+               00812 ; >>> genarith.c:712:genPlus
+               00813 ;;      1109 rIdx = r0x1050 
+0085 0F00      00814         INCFSZ  r0x1016,W
+               00815 ; >>> genarith.c:713:genPlus
+               00816 ;;      1109 rIdx = r0x1052 
+0086 0780      00817         ADDWF   r0x1018,F
+               00818 ; >>> genarith.c:735:genPlus
+               00819 ;;      1109 rIdx = r0x104C 
+0087 0800      00820         MOVF    r0x1010,W
+               00821 ; >>> genarith.c:736:genPlus
+0088 1803      00822         BTFSC   STATUS,0
+               00823 ; >>> genarith.c:737:genPlus
+0089 3E01      00824         ADDLW   0x01
+               00825 ; >>> genarith.c:738:genPlus
+               00826 ;;      1109 rIdx = r0x1053 
+008A 0080      00827         MOVWF   r0x1019
+               00828 ;; gen.c:2261:resultRemat *{*
+               00829 ;; gen.c:5608:genPointerGet *{*
+               00830 ;; ***  genPointerGet  5609
+               00831 ;; gen.c:5496:genGenPointerGet *{*
+               00832 ;; ***  genGenPointerGet  5497
+               00833 ;;      721 register type nRegs=3
+               00834 ;; ***  aopForSym 350
+               00835 ;;      361 sym->rname = _EEDATA, size = 1
+               00836 ;;      line = 5502 result AOP_DIR=_EEDATA, size=1, left AOP_REG=r0x1051, size=3, right -=-, size=0
+               00837 ;; ***  mov2w  1356  offset=0
+               00838 ; >>> gen.c:1361:mov2w
+               00839 ;;      1109 rIdx = r0x1051 
+008B 0800      00840         MOVF    r0x1017,W
+               00841 ; >>> gen.c:5521:genGenPointerGet
+               00842 ;; ***  popRegFromIdx,1043  , rIdx=0x7e
+008C 0080      00843         MOVWF   STK01
+               00844 ;; ***  mov2w  1356  offset=1
+               00845 ; >>> gen.c:1361:mov2w
+               00846 ;;      1109 rIdx = r0x1052 
+008D 0800      00847         MOVF    r0x1018,W
+               00848 ; >>> gen.c:5523:genGenPointerGet
+               00849 ;; ***  popRegFromIdx,1043  , rIdx=0x7f
+008E 0080      00850         MOVWF   STK00
+               00851 ;; ***  mov2w  1356  offset=2
+               00852 ; >>> gen.c:1361:mov2w
+               00853 ;;      1109 rIdx = r0x1053 
+008F 0800      00854         MOVF    r0x1019,W
+               00855 ; >>> gen.c:1402:call_libraryfunc
+0090 0000      00856         PAGESEL __gptrget1
+               00857 ; >>> gen.c:1404:call_libraryfunc
+0091 2000      00858         CALL    __gptrget1
+               00859 ; >>> gen.c:1406:call_libraryfunc
+0092 0000      00860         PAGESEL $
+               00861 ; >>> gen.c:1367:movwf
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00862 ;;      1013
+               00863 ;;      1029  _EEDATA   offset=0
+0093 0000 0000 00864         BANKSEL _EEDATA
+0095 0080      00865         MOVWF   _EEDATA
+               00866 ;; gen.c:2261:resultRemat *{*
+               00867 ;; gen.c:2261:resultRemat *{*
+               00868 ;; gen.c:6117:genPointerSet *{*
+               00869 ;; ***  genPointerSet  6118
+               00870 ;; gen.c:5945:genNearPointerSet *{*
+               00871 ;; ***  genNearPointerSet  5946
+               00872 ;;      641
+               00873 ;;      aopForRemat 425
+               00874 ;;      446: rname _EECON1_bits, val 0, const = 0
+               00875 ;; ***  genNearPointerSet  5963
+               00876 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00877 ;;      _EECON1_bits
+               00878 ;;      line = 5965 result AOP_PCODE=_EECON1_bits, size=2, left -=-, size=0, right AOP_LIT=0x01, size=1
+               00879 ;; gen.c:5694:genPackBits *{*
+               00880 ;; ***  genPackBits  5695
+               00881 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00882 ;;      _EECON1_bits
+               00883 ; >>> gen.c:5720:genPackBits
+               00884         .line   30; "eeprom.c"  WREN=1;               // enable writes
+0096 0000 0000 00885         BANKSEL _EECON1_bits
+0098 1500      00886         BSF     _EECON1_bits,2
+               00887 ;; gen.c:2261:resultRemat *{*
+               00888 ;; gen.c:6332:genAssign *{*
+               00889 ;; ***  genAssign  6333
+               00890 ;; ***  aopForSym 350
+               00891 ;;      361 sym->rname = _EECON2, size = 1
+               00892 ;;      line = 6342 result AOP_DIR=_EECON2, size=1, left -=-, size=0, right AOP_LIT=0x00, size=1
+               00893 ;; ***  genAssign  6434
+               00894 ; >>> gen.c:6443:genAssign
+               00895 ;;      1013
+               00896 ;;      1029  _EECON2   offset=0
+               00897         .line   31; "eeprom.c"  EEPROM_WRITE();       // write a byte
+0099 0180      00898         CLRF    _EECON2
+               00899 ;; gen.c:2261:resultRemat *{*
+               00900 ;; gen.c:4425:genInline *{*
+               00901 ;; ***  genInline  4426
+009A 3055      00902         MOVLW 0x55 
+               00903 ;; gen.c:2261:resultRemat *{*
+               00904 ;; gen.c:4425:genInline *{*
+               00905 ;; ***  genInline  4426
+009B 008D      00906         MOVWF EECON2 
+               00907 ;; gen.c:2261:resultRemat *{*
+               00908 ;; gen.c:4425:genInline *{*
+               00909 ;; ***  genInline  4426
+009C 30AA      00910         MOVLW 0xaa 
+               00911 ;; gen.c:2261:resultRemat *{*
+               00912 ;; gen.c:4425:genInline *{*
+               00913 ;; ***  genInline  4426
+009D 008D      00914         MOVWF EECON2 
+               00915 ;; gen.c:2261:resultRemat *{*
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00916 ;; gen.c:4425:genInline *{*
+               00917 ;; ***  genInline  4426
+009E 148C      00918         BSF EECON1,1; 
+               00919 ;; gen.c:2261:resultRemat *{*
+               00920 ;; gen.c:2597:genLabel *{*
+               00921 ;; ***  genLabel  2600
+               00922 ;; gen.c:2261:resultRemat *{*
+               00923 ;; gen.c:2261:resultRemat *{*
+               00924 ;; gen.c:5608:genPointerGet *{*
+               00925 ;; ***  genPointerGet  5609
+               00926 ;; gen.c:5397:genNearPointerGet *{*
+               00927 ;; ***  genNearPointerGet  5398
+               00928 ;;      641
+               00929 ;;      aopForRemat 425
+               00930 ;;      446: rname _EECON1_bits, val 0, const = 0
+               00931 ;; ***  genNearPointerGet  5414
+               00932 ;;      721 register type nRegs=1
+               00933 ;; gen.c:3504:ifxForOp *{*
+               00934 ;; ***  ifxForOp  3506
+               00935 ;; gen.c:5240:genUnpackBits *{*
+               00936 ;; ***  genUnpackBits  5241
+               00937 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00938 ;;      _EECON1_bits
+               00939 ; >>> gen.c:5257:genUnpackBits
+009F 00940 _00108_DS_
+               00941         .line   32; "eeprom.c"  while(WR);            // wait for write to finish
+009F 0000 0000 00942         BANKSEL _EECON1_bits
+00A1 1880      00943         BTFSC   _EECON1_bits,1
+               00944 ; >>> gen.c:5258:genUnpackBits
+               00945 ;; ***  popGetLabel  key=4, label offset 4
+00A2 2800      00946         GOTO    _00108_DS_
+               00947 ;; gen.c:2261:resultRemat *{*
+               00948 ;; gen.c:2261:resultRemat *{*
+               00949 ;; gen.c:2261:resultRemat *{*
+               00950 ;; gen.c:6117:genPointerSet *{*
+               00951 ;; ***  genPointerSet  6118
+               00952 ;; gen.c:5945:genNearPointerSet *{*
+               00953 ;; ***  genNearPointerSet  5946
+               00954 ;;      641
+               00955 ;;      aopForRemat 425
+               00956 ;;      446: rname _EECON1_bits, val 0, const = 0
+               00957 ;; ***  genNearPointerSet  5963
+               00958 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00959 ;;      _EECON1_bits
+               00960 ;;      line = 5965 result AOP_PCODE=_EECON1_bits, size=2, left -=-, size=0, right AOP_LIT=0x00, size=1
+               00961 ;; gen.c:5694:genPackBits *{*
+               00962 ;; ***  genPackBits  5695
+               00963 ;;      858: aopGet AOP_PCODE type PO_IMMEDIATE
+               00964 ;;      _EECON1_bits
+               00965 ; >>> gen.c:5720:genPackBits
+               00966         .line   33; "eeprom.c"  WREN=0;               // disable writes
+00A3 1100      00967         BCF     _EECON1_bits,2
+               00968 ;; gen.c:2261:resultRemat *{*
+               00969 ;; ***  genPlus  547
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+               00970 ;; genarith.c:548:genPlus *{*
+               00971 ;;      721 register type nRegs=2
+               00972 ;;      606
+               00973 ;;      line = 554 result AOP_REG=r0x104F, size=2, left AOP_REG=r0x104F, size=2, right AOP_LIT=0x01, size=1
+               00974 ;; ***  pic14_getDataSize  1426
+               00975 ;; genarith.c:142:genPlusIncr *{*
+               00976 ;; ***  genPlusIncr  144
+               00977 ;;      result AOP_REG, left AOP_REG, right AOP_LIT
+               00978 ;;      genPlusIncr  156
+               00979 ; >>> genarith.c:168:genPlusIncr
+               00980 ;;      1109 rIdx = r0x104F 
+               00981         .line   27; "eeprom.c"  for(i=0;i<len;i++){     // each char in str
+00A4 0000 0000 00982         BANKSEL r0x1015
+00A6 0A80      00983         INCF    r0x1015,F
+               00984 ; >>> genarith.c:172:genPlusIncr
+00A7 1903      00985         BTFSC   STATUS,2
+               00986 ; >>> genarith.c:173:genPlusIncr
+               00987 ;;      1109 rIdx = r0x1050 
+00A8 0A80      00988         INCF    r0x1016,F
+               00989 ;; gen.c:2261:resultRemat *{*
+               00990 ;; gen.c:2614:genGoto *{*
+               00991 ; >>> gen.c:2616:genGoto
+               00992 ;; ***  popGetLabel  key=7, label offset 4
+00A9 2800      00993         GOTO    _00111_DS_
+               00994 ;; gen.c:2261:resultRemat *{*
+               00995 ;; gen.c:2597:genLabel *{*
+               00996 ;; ***  genLabel  2600
+               00997 ;; gen.c:2261:resultRemat *{*
+               00998 ;; gen.c:2435:genEndFunction *{*
+               00999 ;; ***  genEndFunction  2437
+00AA 01000 _00115_DS_
+00AA 0008      01001         RETURN  
+               01002 ; exit point of _eeprom_write
+               01003 ;; gen.c:6803:genpic14Code *{*
+               01004 
+               01005 
+               01006 ;       code size estimation:
+               01007 ;         128+   21 =   149 instructions (  340 byte)
+               01008 
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 20
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADCON0                            0000001F
+ADCON1                            0000009F
+ADCS0                             00000006
+ADCS1                             00000007
+ADCS2                             00000006
+ADDEN                             00000003
+ADFM                              00000007
+ADIE                              00000006
+ADIF                              00000006
+ADON                              00000000
+ADRESH                            0000001E
+ADRESL                            0000009E
+ANSEL                             0000009B
+BF                                00000000
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCPR1H                            00000016
+CCPR1L                            00000015
+CHS0                              00000003
+CHS1                              00000004
+CHS2                              00000005
+CIS                               00000003
+CKE                               00000006
+CKP                               00000004
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000009C
+CMIE                              00000006
+CMIF                              00000006
+CREN                              00000004
+CSRC                              00000007
+CVR0                              00000000
+CVR1                              00000001
+CVR2                              00000002
+CVR3                              00000003
+CVRCON                            0000009D
+CVREN                             00000007
+CVROE                             00000006
+CVRR                              00000005
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 21
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+D                                 00000005
+DATA_ADDRESS                      00000005
+DC                                00000001
+D_A                               00000005
+EEADR                             0000010D
+EEADRH                            0000010F
+EECON1                            0000018C
+EECON2                            0000018D
+EEDATA                            0000010C
+EEDATH                            0000010E
+EEIE                              00000004
+EEIF                              00000004
+EEPGD                             00000007
+F                                 00000001
+FERR                              00000002
+FREE                              00000004
+FSR                               00000004
+GIE                               00000007
+GO                                00000002
+GO_DONE                           00000002
+I2C_DATA                          00000005
+I2C_READ                          00000002
+I2C_START                         00000003
+I2C_STOP                          00000004
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IOFS                              00000002
+IRCF0                             00000004
+IRCF1                             00000005
+IRCF2                             00000006
+IRP                               00000007
+NOT_A                             00000005
+NOT_ADDRESS                       00000005
+NOT_BO                            00000000
+NOT_BOR                           00000000
+NOT_DONE                          00000002
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_RC8                           00000006
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NOT_TX8                           00000006
+NOT_W                             00000002
+NOT_WRITE                         00000002
+OERR                              00000001
+OPTION_REG                        00000081
+OSCCON                            0000008F
+OSCTUNE                           00000090
+OSFIE                             00000007
+OSFIF                             00000007
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 22
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+OSTS                              00000003
+P                                 00000004
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIE2                              0000008D
+PIR1                              0000000C
+PIR2                              0000000D
+PORTA                             00000005
+PORTB                             00000006
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+PSAVE                             00000000
+R                                 00000002
+RBIE                              00000003
+RBIF                              00000000
+RC8_9                             00000006
+RC9                               00000006
+RCD8                              00000000
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+READ_WRITE                        00000002
+RP0                               00000005
+RP1                               00000006
+RX9                               00000006
+RX9D                              00000000
+R_W                               00000002
+S                                 00000003
+SCS0                              00000000
+SCS1                              00000001
+SMP                               00000007
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+SSAVE                             00000000
+SSPADD                            00000093
+SSPBUF                            00000013
+SSPCON                            00000014
+SSPEN                             00000005
+SSPIE                             00000003
+SSPIF                             00000003
+SSPM0                             00000000
+SSPM1                             00000001
+SSPM2                             00000002
+SSPM3                             00000003
+SSPOV                             00000006
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 23
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+SSPSTAT                           00000094
+STATUS                            00000003
+STK00                             00000000
+STK01                             00000000
+STK02                             00000000
+STK03                             00000000
+STK04                             00000000
+STK05                             00000000
+STK06                             00000000
+STK07                             00000000
+STK08                             00000000
+STK09                             00000000
+STK10                             00000000
+STK11                             00000000
+STK12                             00000000
+SWDTE                             00000000
+SWDTEN                            00000000
+SYNC                              00000004
+T0CS                              00000005
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1INSYNC                          00000002
+T1OSCEN                           00000003
+T1RUN                             00000006
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1CS                            00000001
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISB                             00000086
+TRMT                              00000001
+TUN0                              00000000
+TUN1                              00000001
+TUN2                              00000002
+TUN3                              00000003
+TUN4                              00000004
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 24
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+TUN5                              00000005
+TX8_9                             00000006
+TX9                               00000006
+TX9D                              00000000
+TXD8                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+UA                                00000001
+VCFG0                             00000004
+VCFG1                             00000005
+W                                 00000000
+WCOL                              00000007
+WDTCON                            00000105
+WDTPS0                            00000001
+WDTPS1                            00000002
+WDTPS2                            00000003
+WDTPS3                            00000004
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+WSAVE                             00000000
+Z                                 00000002
+_00108_DS_                        0000009F
+_00111_DS_                        00000061
+_00115_DS_                        000000AA
+_00122_DS_                        0000006D
+_00127_DS_                        00000011
+_00131_DS_                        0000004F
+_00136_DS_                        0000001D
+_ADCON0                           00000000
+_ADCON0_bits                      00000000
+_ADCON1                           00000000
+_ADCON1_bits                      00000000
+_ADRESH                           00000000
+_ADRESL                           00000000
+_ANSEL                            00000000
+_BODEN_OFF                        00003FBF
+_BODEN_ON                         00003FFF
+_CCP1CON                          00000000
+_CCP1CON_bits                     00000000
+_CCP1_RB0                         00003FFF
+_CCP1_RB3                         00002FFF
+_CCPR1H                           00000000
+_CCPR1L                           00000000
+_CMCON                            00000000
+_CMCON_bits                       00000000
+_CONFIG1                          00002007
+_CONFIG2                          00002008
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_ALL                           00001FFF
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 25
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_CP_OFF                           00003FFF
+_CVRCON                           00000000
+_CVRCON_bits                      00000000
+_DEBUG_OFF                        00003FFF
+_DEBUG_ON                         000037FF
+_EEADR                            00000000
+_EEADRH                           00000000
+_EECON1                           00000000
+_EECON1_bits                      00000000
+_EECON2                           00000000
+_EEDATA                           00000000
+_EEDATH                           00000000
+_EXTCLK                           00003FEF
+_EXTRC_CLKOUT                     00003FFF
+_EXTRC_IO                         00003FFE
+_FCMEN_OFF                        00003FFE
+_FCMEN_ON                         00003FFF
+_FSR                              00000000
+_HS_OSC                           00003FEE
+_IESO_OFF                         00003FFD
+_IESO_ON                          00003FFF
+_INDF                             00000000
+_INTCON                           00000000
+_INTCON_bits                      00000000
+_INTRC_CLKOUT                     00003FFD
+_INTRC_IO                         00003FFC
+_LP_OSC                           00003FEC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_MCLR_OFF                         00003FDF
+_MCLR_ON                          00003FFF
+_OPTION_REG                       00000000
+_OPTION_REG_bits                  00000000
+_OSCCON                           00000000
+_OSCCON_bits                      00000000
+_OSCTUNE                          00000000
+_OSCTUNE_bits                     00000000
+_PCL                              00000000
+_PCLATH                           00000000
+_PCON                             00000000
+_PCON_bits                        00000000
+_PIE1                             00000000
+_PIE1_bits                        00000000
+_PIE2                             00000000
+_PIE2_bits                        00000000
+_PIR1                             00000000
+_PIR1_bits                        00000000
+_PIR2                             00000000
+_PIR2_bits                        00000000
+_PORTA                            00000000
+_PORTA_bits                       00000000
+_PORTB                            00000000
+_PORTB_bits                       00000000
+_PR2                              00000000
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 26
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RCREG                            00000000
+_RCSTA                            00000000
+_RCSTA_bits                       00000000
+_SPBRG                            00000000
+_SSPADD                           00000000
+_SSPBUF                           00000000
+_SSPCON                           00000000
+_SSPCON_bits                      00000000
+_SSPSTAT                          00000000
+_SSPSTAT_bits                     00000000
+_STATUS                           00000000
+_STATUS_bits                      00000000
+_T1CON                            00000000
+_T1CON_bits                       00000000
+_T2CON                            00000000
+_T2CON_bits                       00000000
+_TMR0                             00000000
+_TMR1H                            00000000
+_TMR1L                            00000000
+_TMR2                             00000000
+_TRISA                            00000000
+_TRISA_bits                       00000000
+_TRISB                            00000000
+_TRISB_bits                       00000000
+_TXREG                            00000000
+_TXSTA                            00000000
+_TXSTA_bits                       00000000
+_WDTCON                           00000000
+_WDTCON_bits                      00000000
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_WRT_PROTECT_2048                 00003BFF
+_WRT_PROTECT_256                  00003DFF
+_WRT_PROTECT_ALL                  000039FF
+_WRT_PROTECT_OFF                  00003FFF
+_XT_OSC                           00003FED
+__16F88                           00000001
+__gptrget1                        00000000
+__gptrput1                        00000000
+_code_eeprom_000048               00000048
+_code_eeprom_000092               00000092
+_eeprom_read                      00000000
+_eeprom_write                     00000050
+r0x1000                           0000000D
+r0x1001                           0000000C
+r0x1002                           00000010
+r0x1003                           0000000F
+r0x1004                           0000000E
+r0x1005                           00000012
+r0x1006                           00000011
+r0x1007                           00000013
+r0x1008                           00000014
+gpasm-0.13.7 beta               eeprom.asm  8-8-2010  12:38:45           PAGE 27
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+ 
+r0x1009                           00000015
+r0x100A                           00000016
+r0x100B                           00000017
+r0x100C                           00000018
+r0x100E                           00000001
+r0x100F                           00000000
+r0x1010                           00000004
+r0x1011                           00000003
+r0x1012                           00000002
+r0x1013                           00000006
+r0x1014                           00000005
+r0x1015                           00000007
+r0x1016                           00000008
+r0x1017                           00000009
+r0x1018                           0000000A
+r0x1019                           0000000B
+
+
+Errors   :       0
+Warnings :       0 reported,       0 suppressed
+Messages :       0 reported,       0 suppressed
+

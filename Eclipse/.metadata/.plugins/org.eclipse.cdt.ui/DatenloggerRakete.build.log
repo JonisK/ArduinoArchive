@@ -1,0 +1,11 @@
+20:31:14 **** Build of configuration Release for project DatenloggerRakete ****
+make all 
+Building file: ../DatenloggerRakete.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -I"/Users/Jonis/Documents/Arduino/Eclipse" -I"/Users/Jonis/Documents/Arduino/Eclipse" -D__IN_ECLIPSE__=1 -DUSB_VID= -DUSB_PID= -DARDUINO=101 -Wall -Os -ffunction-sections -fdata-sections -fno-exceptions -g -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"DatenloggerRakete.d" -MT"DatenloggerRakete.d"  -c -o "DatenloggerRakete.o" -x c++ "../DatenloggerRakete.cpp"
+In file included from ../DatenloggerRakete.cpp:2:
+../DatenloggerRakete.h:9:21: error: Arduino.h: No such file or directory
+make: *** [DatenloggerRakete.o] Error 1
+
+20:31:14 Build Finished (took 345ms)
+

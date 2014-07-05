@@ -1,0 +1,11 @@
+Arduino\ Board=Arduino Duemilanove w/ ATmega328
+Arduino\ IDE\ Version=1.0.1
+Arduino\ Path=/Applications/Arduino.app/Contents/Resources/Java
+Arduino\ Port=/dev/tty.usbserial-A5005CZQ
+Private\ Library\ Path=/Users/Jonis/Documents/Arduino/libraries
+Serial\ Monitor\ Last\ Used\ Line\ Ending\ index=0
+Serial\ Monitor\ Last\ Used\ auto\ scroll\ setting=true
+Serial\ monitor\ Last\ selected\ rate=9600
+Serial\ monitor\ last\ selected\ Port=/dev/tty.usbserial-A5005CZQ
+Use\ Arduino\ IDE\ Tools=true
+eclipse.preferences.version=1

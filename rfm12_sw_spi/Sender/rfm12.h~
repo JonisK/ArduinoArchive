@@ -1,0 +1,50 @@
+/**
+ * @file rfm12.h
+ * 
+ *
+ */
+
+#ifndef RFM12_H
+#define RFM12_H
+
+
+#define RFM_PORT    (PORTB)
+#define RFM_PORTDR  (TRISB)
+
+#define nSEL  3     // PB3
+#define SDI   1     // PB1
+#define SDO   2     // PB2
+#define SCK   4     // PB4
+#define nIRQ  0     // PB0
+
+
+#define RFM12_PORT_INIT_MASK ( ~((1<<nSEL) | (1<<SDI) | (1<<SDO) | \
+                                (1<<SCK) | (1<<nIRQ)) )
+
+#define RFM12_PORT_INIT         ((0<<nSEL) | (1<<SDI) | (0<<SDO) | \
+                                (0<<SCK) | (1<<nIRQ))
+
+#define RFM12_DEFAULT_VALUES    ((0<<nSEL) | (1<<SDI) | (0<<SDO) | \
+                                (0<<SCK) | (1<<nIRQ)) 
+
+#define RFM12_TOUT  (1000)    // 100ms
+#define TOUT_1s     (10000)
+
+
+
+#define STX 0x02
+#define ETX 0x03
+#define CR  0x0d
+#define LF  0x0a
+
+
+
+extern void rfm12_init(void);
+extern void rfm12_ena_rx(void);
+extern void rfm12_dis_rx(void);
+extern unsigned char rfm12_snd_msg(unsigned char *msg,int len);
+extern unsigned char rfm12_rcv_msg(unsigned char *msg,int len);
+
+
+
+#endif

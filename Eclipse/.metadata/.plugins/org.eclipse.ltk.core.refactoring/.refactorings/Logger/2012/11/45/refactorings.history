@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Logger/Logger.cpp&apos; to &apos;Logger.ino&apos;" description="Rename resource &apos;Logger.cpp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Logger.cpp" name="Logger.ino" stamp="1352487279941" updateReferences="true"/>
+</session>

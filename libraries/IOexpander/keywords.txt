@@ -1,0 +1,5 @@
+IOexpander		KEYWORD2
+init					KEYWORD2
+pinMode				KEYWORD2
+digitalWrite	KEYWORD2
+digitalRead		KEYWORD2

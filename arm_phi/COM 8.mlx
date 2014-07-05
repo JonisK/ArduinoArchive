@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<meguno-link-project version="1.0">
+  <culture>de-DE</culture>
+  <data>
+    <properties>
+      <title />
+      <description />
+      <image-48 />
+    </properties>
+    <shared-visualizer-data>
+      <data id="SerialMonitorData">
+        <send-cr-default>true</send-cr-default>
+        <send-lf-default>true</send-lf-default>
+        <word-wrap-default>true</word-wrap-default>
+        <include-date>false</include-date>
+        <include-time>false</include-time>
+        <clear-on-send>false</clear-on-send>
+        <message-history />
+      </data>
+    </shared-visualizer-data>
+  </data>
+  <serial-sources>
+    <default>1</default>
+    <sources>
+      <source type="SharedRS232Port">
+        <id>1</id>
+        <is-programmer>true</is-programmer>
+        <display-name>COM 8</display-name>
+        <auto-connect>false</auto-connect>
+        <port-name>
+          <type>Fixed</type>
+          <port>COM8</port>
+        </port-name>
+        <baud-rate>115200</baud-rate>
+        <data-bits>8</data-bits>
+        <handshaking>None</handshaking>
+        <parity>None</parity>
+        <stop-bits>One</stop-bits>
+      </source>
+    </sources>
+  </serial-sources>
+  <windows>
+    <window>
+      <position left="490" top="44" width="1270" height="881" state="Normal" />
+      <DockPanel FormatVersion="1.0" DockLeftPortion="0.25" DockRightPortion="220" DockTopPortion="0.25" DockBottomPortion="0.25" ActiveDocumentPane="1" ActivePane="1">
+        <Contents Count="4">
+          <Content ID="0" PersistString="VisualizerToolbox" AutoHidePortion="220" IsHidden="False" IsFloat="False" />
+          <Content ID="1" PersistString="Startup" AutoHidePortion="0.25" IsHidden="False" IsFloat="False">
+            <ShowSourceInTitle>true</ShowSourceInTitle>
+            <ShowPortInTitle>false</ShowPortInTitle>
+            <SourceId>-1</SourceId>
+            <TabTitle>Startup</TabTitle>
+          </Content>
+          <Content ID="2" PersistString="SourceManager" AutoHidePortion="0.25" IsHidden="False" IsFloat="False">
+            <ShowSourceInTitle>true</ShowSourceInTitle>
+            <ShowPortInTitle>false</ShowPortInTitle>
+            <SourceId>-1</SourceId>
+            <TabTitle>Connection Manager</TabTitle>
+          </Content>
+          <Content ID="3" PersistString="SerialMonitor" AutoHidePortion="0.25" IsHidden="False" IsFloat="False">
+            <ShowSourceInTitle>true</ShowSourceInTitle>
+            <ShowPortInTitle>false</ShowPortInTitle>
+            <WordWrap>true</WordWrap>
+            <IncludeDate>false</IncludeDate>
+            <IncludeTime>false</IncludeTime>
+            <InsertTimestamp>false</InsertTimestamp>
+            <SourceId>1</SourceId>
+            <TabTitle>Monitor</TabTitle>
+          </Content>
+        </Contents>
+        <Panes Count="2">
+          <Pane ID="0" DockState="DockRight" ActiveContent="0">
+            <Contents Count="1">
+              <Content ID="0" RefID="0" />
+            </Contents>
+          </Pane>
+          <Pane ID="1" DockState="Document" ActiveContent="3">
+            <Contents Count="3">
+              <Content ID="0" RefID="3" />
+              <Content ID="1" RefID="2" />
+              <Content ID="2" RefID="1" />
+            </Contents>
+          </Pane>
+        </Panes>
+        <DockWindows>
+          <DockWindow ID="0" DockState="Document" ZOrderIndex="0">
+            <NestedPanes Count="1">
+              <Pane ID="0" RefID="1" PrevPane="-1" Alignment="Right" Proportion="0.5" />
+            </NestedPanes>
+          </DockWindow>
+          <DockWindow ID="1" DockState="DockLeft" ZOrderIndex="2">
+            <NestedPanes Count="0" />
+          </DockWindow>
+          <DockWindow ID="2" DockState="DockRight" ZOrderIndex="3">
+            <NestedPanes Count="1">
+              <Pane ID="0" RefID="0" PrevPane="-1" Alignment="Bottom" Proportion="0.5" />
+            </NestedPanes>
+          </DockWindow>
+          <DockWindow ID="3" DockState="DockTop" ZOrderIndex="4">
+            <NestedPanes Count="0" />
+          </DockWindow>
+          <DockWindow ID="4" DockState="DockBottom" ZOrderIndex="5">
+            <NestedPanes Count="0" />
+          </DockWindow>
+        </DockWindows>
+        <FloatWindows Count="0" />
+      </DockPanel>
+    </window>
+  </windows>
+  <reporting>
+    <generate-scheduled-reports>false</generate-scheduled-reports>
+    <destinations>
+      <report-to-folder>
+        <last-report-number>0</last-report-number>
+        <folder-path>G:\Eigene Dateien</folder-path>
+        <use-sub-folder>true</use-sub-folder>
+        <sub-folder-pattern>Report {Seq}</sub-folder-pattern>
+        <enabled>true</enabled>
+        <period>PT1H</period>
+        <last-sent>0001-01-01T00:00:00</last-sent>
+      </report-to-folder>
+    </destinations>
+  </reporting>
+</meguno-link-project>

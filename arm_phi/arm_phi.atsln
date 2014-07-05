@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "arm_phi", "arm_phi.cppproj", "{07B459B4-8D76-4638-BC6D-A459BA2D616B}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Auto_alpha", "..\Auto_alpha\Auto_alpha.cppproj", "{511906C5-1E03-428F-B034-96D118B32C26}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "arm_phitheta", "..\arm_phitheta\arm_phitheta.cppproj", "{056C414E-FA34-4F2D-A8A1-299F446894E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Debug|AVR.Build.0 = Debug|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Release|AVR.ActiveCfg = Release|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Release|AVR.Build.0 = Release|AVR
+		{511906C5-1E03-428F-B034-96D118B32C26}.Debug|AVR.ActiveCfg = Debug|AVR
+		{511906C5-1E03-428F-B034-96D118B32C26}.Debug|AVR.Build.0 = Debug|AVR
+		{511906C5-1E03-428F-B034-96D118B32C26}.Release|AVR.ActiveCfg = Release|AVR
+		{511906C5-1E03-428F-B034-96D118B32C26}.Release|AVR.Build.0 = Release|AVR
+		{056C414E-FA34-4F2D-A8A1-299F446894E4}.Debug|AVR.ActiveCfg = Debug|AVR
+		{056C414E-FA34-4F2D-A8A1-299F446894E4}.Debug|AVR.Build.0 = Debug|AVR
+		{056C414E-FA34-4F2D-A8A1-299F446894E4}.Release|AVR.ActiveCfg = Release|AVR
+		{056C414E-FA34-4F2D-A8A1-299F446894E4}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

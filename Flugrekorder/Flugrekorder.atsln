@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Flugrekorder", "Flugrekorder.cppproj", "{07B459B4-8D76-4638-BC6D-A459BA2D616B}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "I_C_Scanner", "..\I_C_Scanner\I_C_Scanner.cppproj", "{69FA343E-9E95-4E39-96B2-0434991777F6}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Flugrekorder_buffered", "..\Flugrekorder_buffered\Flugrekorder_buffered.cppproj", "{E509CA86-1789-427D-8018-0BBD66901B4B}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "fastLogger", "..\fastLogger\fastLogger.cppproj", "{CD3E0971-921E-4508-BE70-F280B935918C}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "ParseIntoCSV", "..\ParseIntoCSV\ParseIntoCSV.cppproj", "{4DD92B40-7499-4141-8D97-0F2245643D42}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Flugrekorder_2", "..\Flugrekorder_2\Flugrekorder_2.cppproj", "{653C2526-5C9B-48B7-A1CB-1C8E2A99A5D7}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Flugrekorder_Winterlaunch", "..\Flugrekorder_Winterlaunch\Flugrekorder_Winterlaunch.cppproj", "{35610EC9-164B-4642-A957-B7716CB5F722}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Debug|AVR.Build.0 = Debug|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Release|AVR.ActiveCfg = Release|AVR
+		{07B459B4-8D76-4638-BC6D-A459BA2D616B}.Release|AVR.Build.0 = Release|AVR
+		{69FA343E-9E95-4E39-96B2-0434991777F6}.Debug|AVR.ActiveCfg = Debug|AVR
+		{69FA343E-9E95-4E39-96B2-0434991777F6}.Debug|AVR.Build.0 = Debug|AVR
+		{69FA343E-9E95-4E39-96B2-0434991777F6}.Release|AVR.ActiveCfg = Release|AVR
+		{69FA343E-9E95-4E39-96B2-0434991777F6}.Release|AVR.Build.0 = Release|AVR
+		{E509CA86-1789-427D-8018-0BBD66901B4B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{E509CA86-1789-427D-8018-0BBD66901B4B}.Debug|AVR.Build.0 = Debug|AVR
+		{E509CA86-1789-427D-8018-0BBD66901B4B}.Release|AVR.ActiveCfg = Release|AVR
+		{E509CA86-1789-427D-8018-0BBD66901B4B}.Release|AVR.Build.0 = Release|AVR
+		{CD3E0971-921E-4508-BE70-F280B935918C}.Debug|AVR.ActiveCfg = Debug|AVR
+		{CD3E0971-921E-4508-BE70-F280B935918C}.Debug|AVR.Build.0 = Debug|AVR
+		{CD3E0971-921E-4508-BE70-F280B935918C}.Release|AVR.ActiveCfg = Release|AVR
+		{CD3E0971-921E-4508-BE70-F280B935918C}.Release|AVR.Build.0 = Release|AVR
+		{4DD92B40-7499-4141-8D97-0F2245643D42}.Debug|AVR.ActiveCfg = Debug|AVR
+		{4DD92B40-7499-4141-8D97-0F2245643D42}.Debug|AVR.Build.0 = Debug|AVR
+		{4DD92B40-7499-4141-8D97-0F2245643D42}.Release|AVR.ActiveCfg = Release|AVR
+		{4DD92B40-7499-4141-8D97-0F2245643D42}.Release|AVR.Build.0 = Release|AVR
+		{653C2526-5C9B-48B7-A1CB-1C8E2A99A5D7}.Debug|AVR.ActiveCfg = Debug|AVR
+		{653C2526-5C9B-48B7-A1CB-1C8E2A99A5D7}.Debug|AVR.Build.0 = Debug|AVR
+		{653C2526-5C9B-48B7-A1CB-1C8E2A99A5D7}.Release|AVR.ActiveCfg = Release|AVR
+		{653C2526-5C9B-48B7-A1CB-1C8E2A99A5D7}.Release|AVR.Build.0 = Release|AVR
+		{35610EC9-164B-4642-A957-B7716CB5F722}.Debug|AVR.ActiveCfg = Debug|AVR
+		{35610EC9-164B-4642-A957-B7716CB5F722}.Debug|AVR.Build.0 = Debug|AVR
+		{35610EC9-164B-4642-A957-B7716CB5F722}.Release|AVR.ActiveCfg = Release|AVR
+		{35610EC9-164B-4642-A957-B7716CB5F722}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

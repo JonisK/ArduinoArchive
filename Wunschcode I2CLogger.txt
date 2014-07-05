@@ -1,0 +1,128 @@
+// 2013/12/06  by Jonis Kiesbye
+// 
+// I2CLogger library, standard example
+// 
+// Log data of I2C devices to an SD Card at high sample frequencies (600 Hz for 
+// a 3 axis 16bit sensor) as nicely formatted CSV files. Uses the fantastic
+// libraries SdFat and Buffered Writer by fat16lib: 
+// https://code.google.com/p/beta-lib/downloads/list
+// and I2C by Wayne Truchsess: 
+// http://dsscircuits.com/articles/arduino-i2c-master-library.html
+// 
+// An interrupt service routine (ISR) is called in a fixed interval that you
+// can set. It uses the I2C library to read out the sensor's readings. Wire would
+// not work here since it relies on interrupts which are blocked while staying in
+// the ISR. The readings are stored in (several) ring buffers.
+// Those buffers are read out via the main loop, formatted to CSV and written to
+// the SD card by the Buffered Writer.
+// 
+// When selecting the sampling interval keep in mind to give the loop enough time
+// so your buffer has time to get written to the SD card.
+// If you have multiple sensors you can read them out at different sampling rates.
+// Currently the dividers between the sampling rates have to be powers of 2, e.g.
+// 1,2,4,8,...
+// 
+// Tutorials and examples for possible uses are available on the blog
+// http://baunotizen.wordpress.com/ (unfortunately only in german)
+// 
+// I hope you can make some good use of this!
+
+// This example demonstrates a standard application of the I2CLogger library.
+// There are a lot of comments which tell you where you can insert your own code
+// to adapt this example to your own sensors. 
+
+#include <I2CLogger.h>
+
+// Set the ring buffer size. Bigger is better as this means that the chance of
+// overflows gets smaller. On the other side the whole buffer has to fit inside
+// your processor's RAM. The 328p on the UNO has 2048 Bytes while the 2560 on the
+// MEGA offers 8192 Bytes of RAM. If the IDE displays a RAM consumption of more
+// than 80% decrease the buffer size.
+#define BUF_SIZE 40
+
+// Set the logging interval in microseconds. E.g. if you want to log at 100 
+// samples per second enter 10000. To mitigate overflows when logging to an SD 
+// card you should be able to keep 250 milliseconds of sensor readings in the 
+// buffer. If you multiply the LOG_INTERVAL_USEC by BUF_SIZE you get the time 
+// after that your buffer will overflow.
+// You can log multiple sensors at different rates. Set the LOG_INTERVAL_USEC
+// appropriate for the fastest sensor and set multipliers later in setup() 
+const uint32_t LOG_INTERVAL_USEC = 5000;
+
+// Set the time between sync events to your SD card. A sync makes sure that the
+// data is actually written to your card. Until a sync occurs the data since 
+// the last sync might get lost if your logger loses power.
+// To disable syncs you can set the time to 0 (not recommended)
+const uint32_t MAX_SYNC_TIME_MSEC = 1000;
+
+// Initialize the I2CLogger
+I2CLogger log(LOG_INTERVAL_USEC, BUF_SIZE);
+
+// User defined arrays
+// For every sensor that you want to read out declare an array to hold its 
+// readings. These are part of the ring buffer structure. You may select the 
+// data type, the name and the second dimension. The first dimension has to be 
+// [BUF_SIZE]. In the latter functions it will be your job to get the sensor 
+// bytes into these buffer arrays. 
+// Some suggestions:
+// If you have a sensor with a resolution of 10bit to 16bit resolution select 
+// int as its data type. If its readings have no sign select unsigned int. Do
+// not use float.
+// If your sensor has three axes choose [3] as second dimension, if it has only
+// one you don't have to enter a second dimension.
+// If your sensor provides additional values which need another data type or 
+// which are read out at totally different register adresses treat these values
+// as a new sensor. Declare a separate array for them and use addSensor 
+// multiple times.
+int buf_ACC[BUF_SIZE][3]; // three axis 16bit accelerometer
+int buf_MAG[BUF_SIZE][3]; // three axis 12bit compass 
+unsigned int buf_THM[BUF_SIZE];// 12bit temperature sensor. No negative temps 
+
+// As your logger starts up you have to make sure all sensors are set up 
+// correctly and the I2CLogger starts the readout cycles.
+void setup() {
+  // Add all sensors to the I2CLogger. The following parameters are needed:
+  // I2C address: 7bit long, you will find it in the data sheet
+  // readFunction: write a function which stores the bytes that were read out
+  //      of your sensor into the sensor's ring buffer array.
+  // startRegister: the register address of the sensor where the readings
+  //      you are interested in begin.
+  // registerLength: 
+  log.addSensor(address, readFunc, startReg, rawSize);
+
+  // setup code for that sensor
+  
+  
+  // second sensor, logs at rate/divider
+  log.addSensor(address, readFunc, divider);
+  // setup code for that second sensor
+  
+  ...
+  
+  log.setupLoop(ringbuf_sensor1, len(ringbuf_sensor1), ringbuf_sensor2, ...);
+  log.startLogging();
+  
+ }
+ 
+ void readFunc(index, raw_data) {
+  for (int i = 0; i < 3; i++);
+    ringbuf_sensor[index][i] = raw_data[i*2] + 256*raw_data[(i*2)+1];
+  }
+}
+
+void writeOut(index, bw) {
+// write content of all buffers into bw
+}
+
+void shutdown() {
+// disable interrupts, stop timer, close file
+}
+  
+
+void loop {
+  I2CLogger.write();
+  
+  if(Serial.available()) shutdown();
+}
+ 
+ 
